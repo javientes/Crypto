@@ -9,21 +9,13 @@
 *{box-sizing:border-box}
 
 body{
-margin:0;
-padding:24px;
-background:#050a12;
-color:#e8edf5;
-font-family:Arial,sans-serif;
-letter-spacing:.3px;
-position:relative;
-overflow-x:hidden
+margin:0;padding:24px;background:#050a12;color:#e8edf5;
+font-family:Arial,sans-serif;letter-spacing:.3px;
+position:relative;overflow-x:hidden
 }
 
 body:before{
-content:"";
-position:fixed;
-inset:0;
-pointer-events:none;
+content:"";position:fixed;inset:0;pointer-events:none;
 background:repeating-linear-gradient(
 0deg,
 rgba(255,255,255,.015) 0,
@@ -35,22 +27,16 @@ z-index:0
 }
 
 body:after{
-content:"";
-position:fixed;
-left:calc(50% - 15px);
-top:15px;
+content:"";position:fixed;
+left:calc(50% - 15px);top:15px;
 transform:translateX(-50%);
-width:748px;
-height:464px;
+width:748px;height:464px;
 background:url("https://hips.hearstapps.com/pop.h-cdn.co/assets/16/26/4000x2666/gallery-1467144815-starshipenterprise.jpg") center/contain no-repeat;
-opacity:.20;
-pointer-events:none;
-z-index:0
+opacity:.20;pointer-events:none;z-index:0
 }
 
 .header,.top-summary,.toggle-container,.filters,#cryptoView,#airnodeView,#minerView{
-position:relative;
-z-index:1
+position:relative;z-index:1
 }
 
 .header{
@@ -85,14 +71,14 @@ line-height:1.2
 }
 
 .header-online{
-font-size:10px;
+font-size:12px;
 letter-spacing:2px;
 font-weight:bold;
 white-space:nowrap
 }
 
 .header-update{
-font-size:8px;
+font-size:10px;
 letter-spacing:1px;
 font-weight:bold;
 margin-top:5px;
@@ -101,12 +87,10 @@ opacity:.75
 }
 
 .kirk{
-height:52px;
-width:52px;
+height:52px;width:52px;
 object-fit:cover;
 position:absolute;
-right:28px;
-top:4px;
+right:28px;top:4px;
 z-index:3;
 border-radius:50%;
 border:2px solid rgba(255,255,255,.7);
@@ -430,7 +414,7 @@ tbody tr:last-child td{border-bottom:none}
 
 <div class="header-status">
 <div class="header-online">ONLINE // COMMAND SYSTEM</div>
-<div class="header-update">Latest update 30-08-2026 10:54</div>
+<div class="header-update">Latest update 30-08-2026 11:01</div>
 </div>
 
 <img class="kirk" src="https://media.giphy.com/media/kBfR2wWHiwNxwQPaQL/giphy.gif">
@@ -485,15 +469,8 @@ tbody tr:last-child td{border-bottom:none}
 </div>
 
 <div id="cryptoFilters" class="filters">
-<div class="filter">
-<label>CRYPTO</label>
-<select id="crypto"><option>Allen</option></select>
-</div>
-
-<div class="filter">
-<label>PERSOON</label>
-<select id="persoon"><option>Allen</option></select>
-</div>
+<div class="filter"><label>CRYPTO</label><select id="crypto"><option>Allen</option></select></div>
+<div class="filter"><label>PERSOON</label><select id="persoon"><option>Allen</option></select></div>
 </div>
 
 <div id="cryptoView">
@@ -528,9 +505,7 @@ tbody tr:last-child td{border-bottom:none}
 </table>
 </div>
 
-<div class="grafiek-container">
-<div id="barAlleCrypto" class="chart"></div>
-</div>
+<div class="grafiek-container"><div id="barAlleCrypto" class="chart"></div></div>
 
 </div>
 </div>
@@ -539,14 +514,7 @@ tbody tr:last-child td{border-bottom:none}
 <div class="tabel-container">
 <h3>◈ AIRNODE OVERVIEW</h3>
 <table>
-<thead>
-<tr>
-<th>WIE</th>
-<th>CRYPTO</th>
-<th>INLEG</th>
-<th>AANTAL</th>
-</tr>
-</thead>
+<thead><tr><th>WIE</th><th>CRYPTO</th><th>INLEG</th><th>AANTAL</th></tr></thead>
 <tbody id="airnodeTabel"></tbody>
 </table>
 </div>
@@ -556,14 +524,7 @@ tbody tr:last-child td{border-bottom:none}
 <div class="tabel-container">
 <h3>◈ MINER OVERVIEW</h3>
 <table>
-<thead>
-<tr>
-<th>WIE</th>
-<th>CRYPTO</th>
-<th>INLEG</th>
-<th>AANTAL</th>
-</tr>
-</thead>
+<thead><tr><th>WIE</th><th>CRYPTO</th><th>INLEG</th><th>AANTAL</th></tr></thead>
 <tbody id="minerTabel"></tbody>
 </table>
 </div>
@@ -576,53 +537,39 @@ top10Crypto=["WMTX", "COTI", "ADA", "XRP", "BTC", "LINK", "SOL", "DOT", "DENT", 
 top10Inleg=[32892.0, 30931.0, 25662.0, 5625.0, 3726.0, 2075.0, 800.0, 500.0, 400.0, 400.0],
 kolomLNaam="Airnodes R";
 
-const euro=x=>new Intl.NumberFormat(
-"nl-NL",
-{style:"currency",currency:"EUR",minimumFractionDigits:0,maximumFractionDigits:0}
-).format(Number(x)||0);
+const euro=x=>new Intl.NumberFormat("nl-NL",{
+style:"currency",currency:"EUR",
+minimumFractionDigits:0,maximumFractionDigits:0
+}).format(Number(x)||0);
 
-const getal=x=>new Intl.NumberFormat(
-"nl-NL",
-{minimumFractionDigits:0,maximumFractionDigits:8}
-).format(Number(x)||0);
+const getal=x=>new Intl.NumberFormat("nl-NL",{
+minimumFractionDigits:0,maximumFractionDigits:8
+}).format(Number(x)||0);
 
-const dollar=x=>new Intl.NumberFormat(
-"en-US",
-{style:"currency",currency:"USD",minimumFractionDigits:0,maximumFractionDigits:0}
-).format(Number(x)||0);
+const dollar=x=>new Intl.NumberFormat("en-US",{
+style:"currency",currency:"USD",
+minimumFractionDigits:0,maximumFractionDigits:0
+}).format(Number(x)||0);
 
-const tokens=x=>
-x==null||x===""?"":
-Number(x).toLocaleString(
-"nl-NL",
-{minimumFractionDigits:0,maximumFractionDigits:8}
-);
+const tokens=x=>x==null||x===""?"":Number(x).toLocaleString("nl-NL",{
+minimumFractionDigits:0,maximumFractionDigits:8
+});
 
 const koers=x=>{
 x=Number(x);
 if(!Number.isFinite(x))return "";
 let d=x>10?0:x>=1?1:2;
-return new Intl.NumberFormat(
-"nl-NL",
-{minimumFractionDigits:d,maximumFractionDigits:d}
-).format(x)
+return new Intl.NumberFormat("nl-NL",{
+minimumFractionDigits:d,maximumFractionDigits:d
+}).format(x)
 };
 
 const dcaRegel=(i,t)=>{
-i=Number(i)||0;
-t=Number(t)||0;
-
-return t>0
-?new Intl.NumberFormat(
-"nl-NL",
-{
-style:"currency",
-currency:"EUR",
-minimumFractionDigits:2,
-maximumFractionDigits:2
-}
-).format(i/t)
-:""
+i=Number(i)||0;t=Number(t)||0;
+return t>0?new Intl.NumberFormat("nl-NL",{
+style:"currency",currency:"EUR",
+minimumFractionDigits:2,maximumFractionDigits:2
+}).format(i/t):""
 };
 
 const rendementPercentage=(i,h)=>{
@@ -638,23 +585,15 @@ return c!=="airnodes"&&c!=="miner"
 
 ["Crypto","Wie"].forEach((k,i)=>{
 const e=document.getElementById(["crypto","persoon"][i]);
-
-[...new Set(
-data.filter(isCrypto)
-.map(x=>x[k])
-.filter(Boolean)
-)]
+[...new Set(data.filter(isCrypto).map(x=>x[k]).filter(Boolean))]
 .sort()
 .forEach(x=>e.add(new Option(x,x)))
 });
 
 function maakCryptoGrafiek(){
-
 const max=Math.max(...top10Inleg,1);
 
-Plotly.react(
-"barAlleCrypto",
-[{
+Plotly.react("barAlleCrypto",[{
 x:top10Inleg,
 y:top10Crypto,
 type:"bar",
@@ -665,12 +604,8 @@ textposition:"outside",
 cliponaxis:false,
 marker:{line:{width:1}},
 hovertemplate:"<b>%{y}</b><br>Inleg: %{text}<extra></extra>"
-}],
-{
-title:{
-text:"TOP 10 CRYPTO // INLEG",
-font:{size:17,color:"#f0b83e"}
-},
+}],{
+title:{text:"TOP 10 CRYPTO // INLEG",font:{size:17,color:"#f0b83e"}},
 margin:{l:85,r:100,t:60,b:35},
 height:450,
 xaxis:{
@@ -686,40 +621,22 @@ tickfont:{size:13,color:"#d8dee8"}
 },
 plot_bgcolor:"#080d15",
 paper_bgcolor:"#080d15",
-font:{
-family:"Arial",
-color:"#d8dee8"
-}
-},
-{
+font:{family:"Arial",color:"#d8dee8"}
+},{
 responsive:true,
 displayModeBar:false
-}
-)
+})
 }
 
 function vulCryptoTabel(bron){
+const gesorteerd=[...bron].sort((a,b)=>Number(b.RendementPct)-Number(a.RendementPct));
 
-const gesorteerd=[
-...bron
-].sort(
-(a,b)=>Number(b.RendementPct)-Number(a.RendementPct)
-);
-
-document.getElementById("tabel").innerHTML=
-gesorteerd.map(x=>{
-
+document.getElementById("tabel").innerHTML=gesorteerd.map(x=>{
 const i=Number(x.Inleg)||0;
 const h=Number(x["Huidige waarde"])||0;
 const r=h-i;
 const p=rendementPercentage(i,h);
-
-const c=
-r>0
-?"rendement-positief"
-:r<0
-?"rendement-negatief"
-:"";
+const c=r>0?"rendement-positief":r<0?"rendement-negatief":"";
 
 return `
 <tr>
@@ -731,154 +648,89 @@ return `
 <td>${koers(x.Koers)}</td>
 <td>${x["Huidige waarde"]!=null?euro(h):""}</td>
 <td class="${c}">${x["Huidige waarde"]!=null?euro(r):""}</td>
-<td class="${c}">
-${p!==null?p.toLocaleString(
-"nl-NL",
-{minimumFractionDigits:2,maximumFractionDigits:2}
-)+" %":""}
-</td>
-</tr>
-`
+<td class="${c}">${p!==null?p.toLocaleString("nl-NL",{
+minimumFractionDigits:2,
+maximumFractionDigits:2
+})+" %":""}</td>
+</tr>`
 }).join("")
 }
 
 function vulAirnodeTabel(){
-
 document.getElementById("airnodeTabel").innerHTML=
-data
-.filter(x=>x.IsAirnode&&!x.IsMiner)
-.map(x=>`
+data.filter(x=>x.IsAirnode&&!x.IsMiner).map(x=>`
 <tr>
 <td>${x.Wie??""}</td>
 <td>${x.Crypto??""}</td>
 <td>${x.Inleg!=null?euro(x.Inleg):""}</td>
 <td>${x.Aantal??""}</td>
-</tr>
-`)
-.join("")
+</tr>`).join("")
 }
 
 function vulMinerTabel(){
-
 document.getElementById("minerTabel").innerHTML=
-data
-.filter(x=>x.IsMiner)
-.map(x=>`
+data.filter(x=>x.IsMiner).map(x=>`
 <tr>
 <td>${x.Wie??""}</td>
 <td>${x.Crypto??""}</td>
 <td>${x.Inleg!=null?euro(x.Inleg):""}</td>
 <td>${x.Aantal??""}</td>
-</tr>
-`)
-.join("")
+</tr>`).join("")
 }
 
 function update(){
-
 const cf=document.getElementById("crypto").value;
 const pf=document.getElementById("persoon").value;
 
-const d=data
-.filter(isCrypto)
-.filter(
-x=>
-(cf==="Allen"||x.Crypto===cf)
-&&
+const d=data.filter(isCrypto).filter(x=>
+(cf==="Allen"||x.Crypto===cf)&&
 (pf==="Allen"||x.Wie===pf)
 );
 
-const som=(a,k)=>a.reduce(
-(s,x)=>s+(Number(x[k])||0),
-0
-);
+const som=(a,k)=>a.reduce((s,x)=>s+(Number(x[k])||0),0);
 
-const totaalCryptoInleg=som(
-data.filter(x=>x.IsCrypto),
-"Inleg"
-);
-
-const totaalMiner=som(
-data.filter(x=>x.IsMiner),
-"Inleg"
-);
+const totaalCryptoInleg=som(data.filter(x=>x.IsCrypto),"Inleg");
+const totaalMiner=som(data.filter(x=>x.IsMiner),"Inleg");
 
 const totaalAirnodes=som(
-data.filter(
-x=>String(x.Crypto||"").trim().toLowerCase()==="airnodes"
-),
+data.filter(x=>String(x.Crypto||"").trim().toLowerCase()==="airnodes"),
 "Inleg"
 );
 
-const totaleInvestering=
-totaalCryptoInleg+
-totaalMiner+
-totaalAirnodes;
+const totaleInvestering=totaalCryptoInleg+totaalMiner+totaalAirnodes;
 
 const totaalInlegCrypto=som(d,"Inleg");
 const totaalTokens=som(d,"Tokens");
 const totaalHuidigeWaarde=som(d,"Huidige waarde");
-
-const totaalRendement=
-totaalHuidigeWaarde-
-totaalInlegCrypto;
-
-const dca=
-totaalTokens>0
-?totaalInlegCrypto/totaalTokens
-:0;
+const totaalRendement=totaalHuidigeWaarde-totaalInlegCrypto;
+const dca=totaalTokens>0?totaalInlegCrypto/totaalTokens:0;
 
 document.getElementById("totaleInvestering").textContent=euro(totaleInvestering);
 document.getElementById("totaleInleg").textContent=euro(totaalCryptoInleg);
 document.getElementById("minerInleg").textContent=euro(totaalMiner);
 document.getElementById("airnodeInleg").textContent=euro(totaalAirnodes);
+document.getElementById("metamask").textContent=getal(som(data,"Metamask"));
+document.getElementById("wmtxStaking").textContent=getal(som(data,"Wmtx Staking"));
+document.getElementById("unityNode").textContent=dollar(som(data,"Unity node"));
+document.getElementById("kolomL").textContent=dollar(som(data,kolomLNaam));
+document.getElementById("inleg").textContent=euro(totaalInlegCrypto);
 
-document.getElementById("metamask").textContent=
-getal(som(data,"Metamask"));
-
-document.getElementById("wmtxStaking").textContent=
-getal(som(data,"Wmtx Staking"));
-
-document.getElementById("unityNode").textContent=
-dollar(som(data,"Unity node"));
-
-document.getElementById("kolomL").textContent=
-dollar(som(data,kolomLNaam));
-
-document.getElementById("inleg").textContent=
-euro(totaalInlegCrypto);
-
-document.getElementById("dca").textContent=
-dca.toLocaleString(
-"nl-NL",
-{
+document.getElementById("dca").textContent=dca.toLocaleString("nl-NL",{
 style:"currency",
 currency:"EUR",
 minimumFractionDigits:2,
 maximumFractionDigits:2
-}
-);
+});
 
-document.getElementById("volume").textContent=
-tokens(totaalTokens);
-
-document.getElementById("huidigeWaarde").textContent=
-euro(totaalHuidigeWaarde);
+document.getElementById("volume").textContent=tokens(totaalTokens);
+document.getElementById("huidigeWaarde").textContent=euro(totaalHuidigeWaarde);
 
 const rt=document.getElementById("rendement");
-
 rt.textContent=euro(totaalRendement);
+rt.classList.remove("kpi-positief","kpi-negatief");
 
-rt.classList.remove(
-"kpi-positief",
-"kpi-negatief"
-);
-
-if(totaalRendement>0)
-rt.classList.add("kpi-positief");
-
-else if(totaalRendement<0)
-rt.classList.add("kpi-negatief");
+if(totaalRendement>0) rt.classList.add("kpi-positief");
+else if(totaalRendement<0) rt.classList.add("kpi-negatief");
 
 vulCryptoTabel(d);
 vulAirnodeTabel();
@@ -887,42 +739,21 @@ maakCryptoGrafiek()
 }
 
 function zetWeergave(w){
-
 const c=w==="crypto";
 const a=w==="airnodes";
 
-document.getElementById("cryptoView").style.display=
-c?"block":"none";
+document.getElementById("cryptoView").style.display=c?"block":"none";
+document.getElementById("airnodeView").style.display=a?"block":"none";
+document.getElementById("minerView").style.display=w==="miners"?"block":"none";
+document.getElementById("cryptoFilters").style.display=c?"flex":"none";
 
-document.getElementById("airnodeView").style.display=
-a?"block":"none";
-
-document.getElementById("minerView").style.display=
-w==="miners"?"block":"none";
-
-document.getElementById("cryptoFilters").style.display=
-c?"flex":"none";
-
-document.getElementById("toggleCrypto").classList.toggle(
-"active",
-c
-);
-
-document.getElementById("toggleAirnodes").classList.toggle(
-"active",
-a
-);
-
-document.getElementById("toggleMiners").classList.toggle(
-"active",
-w==="miners"
-)
+document.getElementById("toggleCrypto").classList.toggle("active",c);
+document.getElementById("toggleAirnodes").classList.toggle("active",a);
+document.getElementById("toggleMiners").classList.toggle("active",w==="miners")
 }
 
 ["crypto","persoon"].forEach(
-x=>
-document.getElementById(x)
-.addEventListener("change",update)
+x=>document.getElementById(x).addEventListener("change",update)
 );
 
 update();
