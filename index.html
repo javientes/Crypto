@@ -14,7 +14,6 @@ body:after{content:"";position:fixed;left:calc(50% - 15px);top:15px;transform:tr
 
 .header{background:linear-gradient(90deg,#e8a72c,#f4c45d 35%,#a85ce0 75%,#64358e);color:#10131a;padding:18px 25px;border-radius:4px 28px 4px 28px;margin-bottom:48px;box-shadow:0 0 22px rgba(232,167,44,.28);font-weight:bold;min-height:60px;position:relative;display:flex;align-items:center;justify-content:space-between}
 .header h2{margin:0;font-size:23px;letter-spacing:2px;position:relative;z-index:2}
-
 .header-status{position:absolute;right:105px;top:13px;text-align:center;line-height:1.2}
 .header-online{font-size:12px;letter-spacing:2px;font-weight:bold;white-space:nowrap}
 .header-update{font-size:10px;letter-spacing:1px;font-weight:bold;margin-top:5px;white-space:nowrap;opacity:.75}
@@ -26,7 +25,6 @@ body:after{content:"";position:fixed;left:calc(50% - 15px);top:15px;transform:tr
 
 .total-investment{width:480px;height:135px;position:relative;z-index:2}
 
-/* VERBINDING VAN GROTE TILE NAAR HORIZONTALE LIJN */
 .total-investment:after{
 content:"";
 position:absolute;
@@ -44,10 +42,10 @@ position:relative;
 display:flex;
 justify-content:space-between;
 width:560px;
-padding-top:35px
+padding-top:35px;
+transform:translateX(-3px)
 }
 
-/* HORIZONTALE VERDEELLIJN */
 .investment-children:before{
 content:"";
 position:absolute;
@@ -68,7 +66,6 @@ flex-direction:column;
 justify-content:center
 }
 
-/* VERTICALE LIJN NAAR ELKE ONDERSTE TILE */
 .investment-child:before{
 content:"";
 position:absolute;
@@ -153,7 +150,6 @@ th{background:#182333;color:#f0b83e;font-size:11px;letter-spacing:1px}
 td{color:#d8dee8;font-size:13px}
 tbody tr:hover{background:#182333}
 tbody tr:last-child td{border-bottom:none}
-
 .airnode-only{display:none}
 
 @media(max-width:1100px){
@@ -181,7 +177,7 @@ tbody tr:last-child td{border-bottom:none}
 <h2>STAR TREK // CRYPTO COMMAND</h2>
 <div class="header-status">
 <div class="header-online">ONLINE // COMMAND SYSTEM</div>
-<div class="header-update">Latest update 30-08-2026 11:29</div>
+<div class="header-update">Latest update 30-08-2026 11:34</div>
 </div>
 <img class="kirk" src="https://media.giphy.com/media/kBfR2wWHiwNxwQPaQL/giphy.gif">
 </div>
@@ -249,7 +245,6 @@ tbody tr:last-child td{border-bottom:none}
 </div>
 
 <div class="onderkant">
-
 <div class="tabel-container">
 <h3>◈ DETAIL OVERVIEW</h3>
 <table>
@@ -271,8 +266,8 @@ tbody tr:last-child td{border-bottom:none}
 </div>
 
 <div class="grafiek-container"><div id="barAlleCrypto" class="chart"></div></div>
-
 </div>
+
 </div>
 
 <div id="airnodeView" class="airnode-only">
@@ -311,14 +306,12 @@ return new Intl.NumberFormat("nl-NL",{minimumFractionDigits:d,maximumFractionDig
 };
 
 const dcaRegel=(i,t)=>{
-i=Number(i)||0;
-t=Number(t)||0;
+i=Number(i)||0;t=Number(t)||0;
 return t>0?new Intl.NumberFormat("nl-NL",{style:"currency",currency:"EUR",minimumFractionDigits:2,maximumFractionDigits:2}).format(i/t):""
 };
 
 const rendementPercentage=(i,h)=>{
-i=Number(i)||0;
-h=Number(h)||0;
+i=Number(i)||0;h=Number(h)||0;
 return i===0?null:(h-i)/i*100
 };
 
@@ -334,40 +327,26 @@ const e=document.getElementById(["crypto","persoon"][i]);
 
 function maakCryptoGrafiek(){
 const max=Math.max(...top10Inleg,1);
-
 Plotly.react("barAlleCrypto",[{
-x:top10Inleg,
-y:top10Crypto,
-type:"bar",
-orientation:"h",
-text:top10Inleg.map(euro),
-texttemplate:"%{text}",
-textposition:"outside",
-cliponaxis:false,
-marker:{line:{width:1}},
+x:top10Inleg,y:top10Crypto,type:"bar",orientation:"h",
+text:top10Inleg.map(euro),texttemplate:"%{text}",textposition:"outside",
+cliponaxis:false,marker:{line:{width:1}},
 hovertemplate:"<b>%{y}</b><br>Inleg: %{text}<extra></extra>"
 }],{
 title:{text:"TOP 10 CRYPTO // INLEG",font:{size:17,color:"#f0b83e"}},
-margin:{l:85,r:100,t:60,b:35},
-height:450,
+margin:{l:85,r:100,t:60,b:35},height:450,
 xaxis:{showgrid:true,gridcolor:"#263345",showticklabels:false,zeroline:false,range:[0,max*1.2]},
 yaxis:{autorange:"reversed",tickfont:{size:13,color:"#d8dee8"}},
-plot_bgcolor:"#080d15",
-paper_bgcolor:"#080d15",
+plot_bgcolor:"#080d15",paper_bgcolor:"#080d15",
 font:{family:"Arial",color:"#d8dee8"}
 },{responsive:true,displayModeBar:false})
 }
 
 function vulCryptoTabel(bron){
 const gesorteerd=[...bron].sort((a,b)=>Number(b.RendementPct)-Number(a.RendementPct));
-
 document.getElementById("tabel").innerHTML=gesorteerd.map(x=>{
-const i=Number(x.Inleg)||0;
-const h=Number(x["Huidige waarde"])||0;
-const r=h-i;
-const p=rendementPercentage(i,h);
+const i=Number(x.Inleg)||0,h=Number(x["Huidige waarde"])||0,r=h-i,p=rendementPercentage(i,h);
 const c=r>0?"rendement-positief":r<0?"rendement-negatief":"";
-
 return `<tr>
 <td>${x.Wie??""}</td>
 <td>${x.Crypto??""}</td>
@@ -384,43 +363,25 @@ return `<tr>
 
 function vulAirnodeTabel(){
 document.getElementById("airnodeTabel").innerHTML=data.filter(x=>x.IsAirnode&&!x.IsMiner).map(x=>`
-<tr>
-<td>${x.Wie??""}</td>
-<td>${x.Crypto??""}</td>
-<td>${x.Inleg!=null?euro(x.Inleg):""}</td>
-<td>${x.Aantal??""}</td>
-</tr>`).join("")
+<tr><td>${x.Wie??""}</td><td>${x.Crypto??""}</td><td>${x.Inleg!=null?euro(x.Inleg):""}</td><td>${x.Aantal??""}</td></tr>`).join("")
 }
 
 function vulMinerTabel(){
 document.getElementById("minerTabel").innerHTML=data.filter(x=>x.IsMiner).map(x=>`
-<tr>
-<td>${x.Wie??""}</td>
-<td>${x.Crypto??""}</td>
-<td>${x.Inleg!=null?euro(x.Inleg):""}</td>
-<td>${x.Aantal??""}</td>
-</tr>`).join("")
+<tr><td>${x.Wie??""}</td><td>${x.Crypto??""}</td><td>${x.Inleg!=null?euro(x.Inleg):""}</td><td>${x.Aantal??""}</td></tr>`).join("")
 }
 
 function update(){
-const cf=document.getElementById("crypto").value;
-const pf=document.getElementById("persoon").value;
-
-const d=data.filter(isCrypto).filter(x=>
-(cf==="Allen"||x.Crypto===cf)&&
-(pf==="Allen"||x.Wie===pf)
-);
-
+const cf=document.getElementById("crypto").value,pf=document.getElementById("persoon").value;
+const d=data.filter(isCrypto).filter(x=>(cf==="Allen"||x.Crypto===cf)&&(pf==="Allen"||x.Wie===pf));
 const som=(a,k)=>a.reduce((s,x)=>s+(Number(x[k])||0),0);
 
 const totaalCryptoInleg=som(data.filter(x=>x.IsCrypto),"Inleg");
 const totaalMiner=som(data.filter(x=>x.IsMiner),"Inleg");
 const totaalAirnodes=som(data.filter(x=>String(x.Crypto||"").trim().toLowerCase()==="airnodes"),"Inleg");
-
 const totaleInvestering=totaalCryptoInleg+totaalMiner+totaalAirnodes;
-const totaalInlegCrypto=som(d,"Inleg");
-const totaalTokens=som(d,"Tokens");
-const totaalHuidigeWaarde=som(d,"Huidige waarde");
+
+const totaalInlegCrypto=som(d,"Inleg"),totaalTokens=som(d,"Tokens"),totaalHuidigeWaarde=som(d,"Huidige waarde");
 const totaalRendement=totaalHuidigeWaarde-totaalInlegCrypto;
 const dca=totaalTokens>0?totaalInlegCrypto/totaalTokens:0;
 
@@ -440,7 +401,6 @@ document.getElementById("huidigeWaarde").textContent=euro(totaalHuidigeWaarde);
 const rt=document.getElementById("rendement");
 rt.textContent=euro(totaalRendement);
 rt.classList.remove("kpi-positief","kpi-negatief");
-
 if(totaalRendement>0)rt.classList.add("kpi-positief");
 else if(totaalRendement<0)rt.classList.add("kpi-negatief");
 
@@ -451,21 +411,17 @@ maakCryptoGrafiek()
 }
 
 function zetWeergave(w){
-const c=w==="crypto";
-const a=w==="airnodes";
-
+const c=w==="crypto",a=w==="airnodes";
 document.getElementById("cryptoView").style.display=c?"block":"none";
 document.getElementById("airnodeView").style.display=a?"block":"none";
 document.getElementById("minerView").style.display=w==="miners"?"block":"none";
 document.getElementById("cryptoFilters").style.display=c?"flex":"none";
-
 document.getElementById("toggleCrypto").classList.toggle("active",c);
 document.getElementById("toggleAirnodes").classList.toggle("active",a);
 document.getElementById("toggleMiners").classList.toggle("active",w==="miners")
 }
 
 ["crypto","persoon"].forEach(x=>document.getElementById(x).addEventListener("change",update));
-
 update();
 zetWeergave("crypto");
 </script>
