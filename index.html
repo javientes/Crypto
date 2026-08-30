@@ -200,7 +200,6 @@ flex:1;
 min-width:420px
 }
 
-/* ALLE BOVENSTE TILES */
 .summary-tile{
 background:linear-gradient(145deg,#4a525e,#252c35);
 border:1px solid #e8a72c;
@@ -211,7 +210,6 @@ text-align:center;
 box-shadow:0 0 14px rgba(232,167,44,.12)
 }
 
-/* GROTE TOTALE INVESTERING TILE */
 .total-investment .summary-tile{
 width:100%;
 height:100%;
@@ -258,6 +256,49 @@ text-shadow:0 0 14px rgba(255,190,50,.45)
 
 .investment-child .summary-title{font-size:.72em}
 .investment-child .summary-value{font-size:1.25em;margin-top:6px}
+
+/* HOVER LACE WALLET */
+.tooltip-tile{
+position:relative;
+cursor:default
+}
+
+.tile-tooltip{
+position:absolute;
+left:50%;
+bottom:calc(100% + 10px);
+transform:translateX(-50%) translateY(5px);
+background:#0c131e;
+border:1px solid #e8a72c;
+border-radius:4px 12px 4px 12px;
+padding:10px 13px;
+min-width:190px;
+opacity:0;
+visibility:hidden;
+transition:.15s ease;
+pointer-events:none;
+z-index:50;
+box-shadow:0 5px 18px rgba(0,0,0,.45);
+text-align:left
+}
+
+.tooltip-tile:hover .tile-tooltip{
+opacity:1;
+visibility:visible;
+transform:translateX(-50%) translateY(0)
+}
+
+.tooltip-row{
+display:flex;
+justify-content:space-between;
+gap:18px;
+font-size:11px;
+line-height:1.8;
+white-space:nowrap
+}
+
+.tooltip-label{color:#b8c1cf}
+.tooltip-value{color:#f4c45d;font-weight:bold}
 
 .toggle-container{
 display:flex;
@@ -435,7 +476,7 @@ tbody tr:last-child td{border-bottom:none}
 
 <div class="header-status">
 <div class="header-online">ONLINE // COMMAND SYSTEM</div>
-<div class="header-update">Latest update 30-08-2026 12:05</div>
+<div class="header-update">Latest update 30-08-2026 12:36</div>
 </div>
 
 <img class="kirk" src="https://media.giphy.com/media/kBfR2wWHiwNxwQPaQL/giphy.gif">
@@ -473,16 +514,28 @@ tbody tr:last-child td{border-bottom:none}
 </div>
 
 <div class="summary-right">
+
 <div class="summary-tile">
 <div class="summary-title">METAMASK</div>
 <div class="summary-subtitle">coti tokens</div>
 <div class="summary-value" id="metamask">0</div>
 </div>
 
-<div class="summary-tile">
+<div class="summary-tile tooltip-tile">
 <div class="summary-title">LACE WALLET</div>
 <div class="summary-subtitle">wmtx tokens</div>
 <div class="summary-value" id="wmtxStaking">0</div>
+
+<div class="tile-tooltip">
+<div class="tooltip-row">
+<span class="tooltip-label">WMTX gekocht</span>
+<span class="tooltip-value" id="wmtxGekochtTooltip">0</span>
+</div>
+<div class="tooltip-row">
+<span class="tooltip-label">WMTX staking</span>
+<span class="tooltip-value" id="wmtxStakingTooltip">0</span>
+</div>
+</div>
 </div>
 
 <div class="summary-tile">
@@ -496,8 +549,8 @@ tbody tr:last-child td{border-bottom:none}
 <div class="summary-subtitle">rendement</div>
 <div class="summary-value" id="kolomL">$0</div>
 </div>
-</div>
 
+</div>
 </div>
 
 <div class="toggle-container">
@@ -617,10 +670,13 @@ tbody tr:last-child td{border-bottom:none}
 </div>
 
 <script>
-const data=[{"Wie": "Dani", "Crypto": "Miner", "Inleg": 2250.0, "Tokens": NaN, "Type": "", "Aantal": 1.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -2250.0, "RendementPct": NaN, "Metamask": 245736.0, "Wmtx Staking": 190594.0, "Unity node": 138.0, "IsAirnode": true, "IsMiner": true, "IsCrypto": false, "Airnodes R": 325.0}, {"Wie": "Bianca", "Crypto": "Miner", "Inleg": 2250.0, "Tokens": NaN, "Type": "", "Aantal": 1.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -2250.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": true, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "Airnodes", "Inleg": 550.0, "Tokens": NaN, "Type": "Frontier Core", "Aantal": 1.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -550.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "Airnodes", "Inleg": 1124.0, "Tokens": NaN, "Type": "Embernodes", "Aantal": 10.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -1124.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "Airnodes", "Inleg": 562.0, "Tokens": NaN, "Type": "Embernodes", "Aantal": 5.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -562.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "Airnodes", "Inleg": 488.0, "Tokens": NaN, "Type": "Sparks", "Aantal": 5.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -488.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "Airnodes", "Inleg": 488.0, "Tokens": NaN, "Type": "Sparks", "Aantal": 5.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -488.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Thorgal", "Crypto": "ADA", "Inleg": 2000.0, "Tokens": 1380.0, "Type": "", "Aantal": NaN, "Koers": 0.173, "Huidige waarde": 239.19, "Rendement": -1760.81, "RendementPct": -88.0405, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Thorgal", "Crypto": "COTI", "Inleg": 1750.0, "Tokens": 2031.0, "Type": "", "Aantal": NaN, "Koers": 0.0114, "Huidige waarde": 23.11, "Rendement": -1726.89, "RendementPct": -98.67942857142857, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Thorgal", "Crypto": "WMTX", "Inleg": 1350.0, "Tokens": 4916.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 144.26, "Rendement": -1205.74, "RendementPct": -89.31407407407409, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Loki", "Crypto": "ADA", "Inleg": 2000.0, "Tokens": 1380.0, "Type": "", "Aantal": NaN, "Koers": 0.173, "Huidige waarde": 239.19, "Rendement": -1760.81, "RendementPct": -88.0405, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Loki", "Crypto": "COTI", "Inleg": 1750.0, "Tokens": 2031.0, "Type": "", "Aantal": NaN, "Koers": 0.0114, "Huidige waarde": 23.11, "Rendement": -1726.89, "RendementPct": -98.67942857142857, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Loki", "Crypto": "WMTX", "Inleg": 1250.0, "Tokens": 7593.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 222.81, "Rendement": -1027.19, "RendementPct": -82.1752, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Opa/Oma", "Crypto": "WMTX", "Inleg": 1000.0, "Tokens": 3186.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 93.49, "Rendement": -906.51, "RendementPct": -90.65100000000001, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "WMTX", "Inleg": 29292.0, "Tokens": 185887.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 5454.67, "Rendement": -23837.33, "RendementPct": -81.3782944148573, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "ADA", "Inleg": 21662.0, "Tokens": 16528.0, "Type": "", "Aantal": NaN, "Koers": 0.173, "Huidige waarde": 2864.7, "Rendement": -18797.3, "RendementPct": -86.77545932970177, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "COTI", "Inleg": 0.0, "Tokens": 54081.0, "Type": "", "Aantal": NaN, "Koers": 0.0114, "Huidige waarde": 615.35, "Rendement": 615.35, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "COTI", "Inleg": 27431.0, "Tokens": 459353.0, "Type": "", "Aantal": NaN, "Koers": 0.0114, "Huidige waarde": 5226.63, "Rendement": -22204.37, "RendementPct": -80.94626517443768, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "XRP", "Inleg": 5625.0, "Tokens": 7920.0, "Type": "", "Aantal": NaN, "Koers": 1.2, "Huidige waarde": 9501.7, "Rendement": 3876.7000000000007, "RendementPct": 68.91911111111112, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "BTC", "Inleg": 1863.0, "Tokens": 0.08234, "Type": "", "Aantal": NaN, "Koers": 67434.87, "Huidige waarde": 5552.59, "Rendement": 3689.59, "RendementPct": 198.04562533548042, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "BTC", "Inleg": 1863.0, "Tokens": 0.08234, "Type": "", "Aantal": NaN, "Koers": 67434.87, "Huidige waarde": 5552.59, "Rendement": 3689.59, "RendementPct": 198.04562533548042, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "LINK", "Inleg": 375.0, "Tokens": 60.4, "Type": "", "Aantal": NaN, "Koers": 9.84, "Huidige waarde": 594.3, "Rendement": 219.29999999999995, "RendementPct": 58.47999999999999, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "LINK", "Inleg": 1700.0, "Tokens": 75.6, "Type": "", "Aantal": NaN, "Koers": 9.84, "Huidige waarde": 743.85, "Rendement": -956.15, "RendementPct": -56.24411764705882, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "SOL", "Inleg": 800.0, "Tokens": 4.33, "Type": "", "Aantal": NaN, "Koers": 90.57, "Huidige waarde": 392.15, "Rendement": -407.85, "RendementPct": -50.98125, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "DOT", "Inleg": 500.0, "Tokens": 22.09, "Type": "", "Aantal": NaN, "Koers": 0.728, "Huidige waarde": 16.09, "Rendement": -483.91, "RendementPct": -96.782, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "DENT", "Inleg": 400.0, "Tokens": 120411.0, "Type": "", "Aantal": NaN, "Koers": 6.68e-05, "Huidige waarde": 8.04, "Rendement": -391.96, "RendementPct": -97.99, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "MATIC", "Inleg": 400.0, "Tokens": 246.59, "Type": "", "Aantal": NaN, "Koers": 0.845, "Huidige waarde": 208.46, "Rendement": -191.54, "RendementPct": -47.885, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "ENJ", "Inleg": 375.0, "Tokens": 242.7, "Type": "", "Aantal": NaN, "Koers": 0.022, "Huidige waarde": 5.26, "Rendement": -369.74, "RendementPct": -98.59733333333334, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "MANA", "Inleg": 375.0, "Tokens": 131.52, "Type": "", "Aantal": NaN, "Koers": 0.0655533, "Huidige waarde": 8.6216, "Rendement": -366.3784, "RendementPct": -97.70090666666667, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "ALGO", "Inleg": 100.0, "Tokens": 843.0, "Type": "", "Aantal": NaN, "Koers": 0.075, "Huidige waarde": 63.28, "Rendement": -36.72, "RendementPct": -36.72, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "OCEAN", "Inleg": 131.0, "Tokens": 312.5, "Type": "", "Aantal": NaN, "Koers": 0.123, "Huidige waarde": 38.45, "Rendement": -92.55, "RendementPct": -70.64885496183206, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "ETH", "Inleg": 125.0, "Tokens": 0.0684, "Type": "", "Aantal": NaN, "Koers": 2120.7, "Huidige waarde": 145.06, "Rendement": 20.060000000000002, "RendementPct": 16.048000000000002, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "SAND", "Inleg": 50.0, "Tokens": 69.4, "Type": "", "Aantal": NaN, "Koers": 0.033, "Huidige waarde": 2.31, "Rendement": -47.69, "RendementPct": -95.38, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "APE", "Inleg": 50.0, "Tokens": 14.11, "Type": "", "Aantal": NaN, "Koers": 0.12, "Huidige waarde": 1.69, "Rendement": -48.31, "RendementPct": -96.62, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "WMTX", "Inleg": 0.0, "Tokens": 11976.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 351.42, "Rendement": 351.42, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "VET", "Inleg": 175.0, "Tokens": 1389.0, "Type": "", "Aantal": NaN, "Koers": 0.006, "Huidige waarde": 8.47, "Rendement": -166.53, "RendementPct": -95.16, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "BCH", "Inleg": 100.0, "Tokens": 0.23, "Type": "", "Aantal": NaN, "Koers": 211.434, "Huidige waarde": 48.63, "Rendement": -51.37, "RendementPct": -51.36999999999999, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}],
+const data=[{"Wie": "Dani", "Crypto": "Miner", "Inleg": 2250.0, "Tokens": NaN, "Type": "", "Aantal": 1.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -2250.0, "RendementPct": NaN, "Metamask": 245736.0, "Wmtx Staking": 178618.0, "Unity node": 138.0, "IsAirnode": true, "IsMiner": true, "IsCrypto": false, "Airnodes R": 325.0}, {"Wie": "Bianca", "Crypto": "Miner", "Inleg": 2250.0, "Tokens": NaN, "Type": "", "Aantal": 1.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -2250.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": 11976.0, "Unity node": NaN, "IsAirnode": true, "IsMiner": true, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "Airnodes", "Inleg": 550.0, "Tokens": NaN, "Type": "Frontier Core", "Aantal": 1.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -550.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "Airnodes", "Inleg": 1124.0, "Tokens": NaN, "Type": "Embernodes", "Aantal": 10.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -1124.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "Airnodes", "Inleg": 562.0, "Tokens": NaN, "Type": "Embernodes", "Aantal": 5.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -562.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "Airnodes", "Inleg": 488.0, "Tokens": NaN, "Type": "Sparks", "Aantal": 5.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -488.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "Airnodes", "Inleg": 488.0, "Tokens": NaN, "Type": "Sparks", "Aantal": 5.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -488.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Thorgal", "Crypto": "ADA", "Inleg": 2000.0, "Tokens": 1380.0, "Type": "", "Aantal": NaN, "Koers": 0.173, "Huidige waarde": 238.91, "Rendement": -1761.09, "RendementPct": -88.05449999999999, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Thorgal", "Crypto": "COTI", "Inleg": 1750.0, "Tokens": 2031.0, "Type": "", "Aantal": NaN, "Koers": 0.0113, "Huidige waarde": 22.99, "Rendement": -1727.01, "RendementPct": -98.68628571428572, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Thorgal", "Crypto": "WMTX", "Inleg": 1350.0, "Tokens": 4916.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 143.85, "Rendement": -1206.15, "RendementPct": -89.34444444444445, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Loki", "Crypto": "ADA", "Inleg": 2000.0, "Tokens": 1380.0, "Type": "", "Aantal": NaN, "Koers": 0.173, "Huidige waarde": 238.91, "Rendement": -1761.09, "RendementPct": -88.05449999999999, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Loki", "Crypto": "COTI", "Inleg": 1750.0, "Tokens": 2031.0, "Type": "", "Aantal": NaN, "Koers": 0.0113, "Huidige waarde": 22.99, "Rendement": -1727.01, "RendementPct": -98.68628571428572, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Loki", "Crypto": "WMTX", "Inleg": 1250.0, "Tokens": 7593.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 222.18, "Rendement": -1027.82, "RendementPct": -82.2256, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Opa/Oma", "Crypto": "WMTX", "Inleg": 1000.0, "Tokens": 3186.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 93.22, "Rendement": -906.78, "RendementPct": -90.678, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "WMTX", "Inleg": 29292.0, "Tokens": 187136.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 5475.74, "Rendement": -23816.260000000002, "RendementPct": -81.30636351222176, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "ADA", "Inleg": 21662.0, "Tokens": 16528.0, "Type": "", "Aantal": NaN, "Koers": 0.173, "Huidige waarde": 2861.39, "Rendement": -18800.61, "RendementPct": -86.79073954390176, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "COTI", "Inleg": 0.0, "Tokens": 54081.0, "Type": "", "Aantal": NaN, "Koers": 0.0113, "Huidige waarde": 612.23, "Rendement": 612.23, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "COTI", "Inleg": 27431.0, "Tokens": 459353.0, "Type": "", "Aantal": NaN, "Koers": 0.0113, "Huidige waarde": 5200.12, "Rendement": -22230.88, "RendementPct": -81.04290765921768, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "XRP", "Inleg": 5625.0, "Tokens": 7920.0, "Type": "", "Aantal": NaN, "Koers": 1.191, "Huidige waarde": 9433.34, "Rendement": 3808.34, "RendementPct": 67.70382222222221, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "BTC", "Inleg": 1863.0, "Tokens": 0.08234, "Type": "", "Aantal": NaN, "Koers": 67290.73, "Huidige waarde": 5540.72, "Rendement": 3677.7200000000003, "RendementPct": 197.40848094471284, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "BTC", "Inleg": 1863.0, "Tokens": 0.08234, "Type": "", "Aantal": NaN, "Koers": 67290.73, "Huidige waarde": 5540.72, "Rendement": 3677.7200000000003, "RendementPct": 197.40848094471284, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "LINK", "Inleg": 375.0, "Tokens": 60.4, "Type": "", "Aantal": NaN, "Koers": 9.79, "Huidige waarde": 591.17, "Rendement": 216.16999999999996, "RendementPct": 57.645333333333326, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "LINK", "Inleg": 1700.0, "Tokens": 75.6, "Type": "", "Aantal": NaN, "Koers": 9.79, "Huidige waarde": 739.94, "Rendement": -960.06, "RendementPct": -56.47411764705882, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "SOL", "Inleg": 800.0, "Tokens": 4.33, "Type": "", "Aantal": NaN, "Koers": 90.2, "Huidige waarde": 390.58, "Rendement": -409.42, "RendementPct": -51.177499999999995, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "DOT", "Inleg": 500.0, "Tokens": 22.09, "Type": "", "Aantal": NaN, "Koers": 0.727, "Huidige waarde": 16.06, "Rendement": -483.94, "RendementPct": -96.788, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "DENT", "Inleg": 400.0, "Tokens": 120411.0, "Type": "", "Aantal": NaN, "Koers": 6.742e-05, "Huidige waarde": 8.12, "Rendement": -391.88, "RendementPct": -97.97, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "MATIC", "Inleg": 400.0, "Tokens": 246.59, "Type": "", "Aantal": NaN, "Koers": 0.845, "Huidige waarde": 208.43, "Rendement": -191.57, "RendementPct": -47.8925, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "ENJ", "Inleg": 375.0, "Tokens": 242.7, "Type": "", "Aantal": NaN, "Koers": 0.022, "Huidige waarde": 5.27, "Rendement": -369.73, "RendementPct": -98.59466666666667, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "MANA", "Inleg": 375.0, "Tokens": 131.52, "Type": "", "Aantal": NaN, "Koers": 0.0649465, "Huidige waarde": 8.5418, "Rendement": -366.4582, "RendementPct": -97.72218666666666, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "ALGO", "Inleg": 100.0, "Tokens": 843.0, "Type": "", "Aantal": NaN, "Koers": 0.075, "Huidige waarde": 62.86, "Rendement": -37.14, "RendementPct": -37.14, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "OCEAN", "Inleg": 131.0, "Tokens": 312.5, "Type": "", "Aantal": NaN, "Koers": 0.123, "Huidige waarde": 38.37, "Rendement": -92.63, "RendementPct": -70.70992366412213, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "ETH", "Inleg": 125.0, "Tokens": 0.0684, "Type": "", "Aantal": NaN, "Koers": 2116.7, "Huidige waarde": 144.78, "Rendement": 19.78, "RendementPct": 15.824000000000002, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "SAND", "Inleg": 50.0, "Tokens": 69.4, "Type": "", "Aantal": NaN, "Koers": 0.033, "Huidige waarde": 2.32, "Rendement": -47.68, "RendementPct": -95.36, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "APE", "Inleg": 50.0, "Tokens": 14.11, "Type": "", "Aantal": NaN, "Koers": 0.119, "Huidige waarde": 1.68, "Rendement": -48.32, "RendementPct": -96.64, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "WMTX", "Inleg": 0.0, "Tokens": 11976.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 350.43, "Rendement": 350.43, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "VET", "Inleg": 175.0, "Tokens": 1389.0, "Type": "", "Aantal": NaN, "Koers": 0.006, "Huidige waarde": 8.37, "Rendement": -166.63, "RendementPct": -95.21714285714286, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "BCH", "Inleg": 100.0, "Tokens": 0.23, "Type": "", "Aantal": NaN, "Koers": 211.468, "Huidige waarde": 48.64, "Rendement": -51.36, "RendementPct": -51.35999999999999, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}],
 top10Crypto=["WMTX", "COTI", "ADA", "XRP", "BTC", "LINK", "SOL", "DOT", "DENT", "MATIC"],
 top10Inleg=[32892.0, 30931.0, 25662.0, 5625.0, 3726.0, 2075.0, 800.0, 500.0, 400.0, 400.0],
-kolomLNaam="Airnodes R";
+kolomLNaam="Airnodes R",
+wmtxGekocht=178618.0,
+wmtxStaking=11976.0,
+wmtxTotaal=190594.0;
 
 const euro=x=>new Intl.NumberFormat(
 "nl-NL",
@@ -883,8 +939,10 @@ document.getElementById("airnodeInleg").textContent=euro(totaalAirnodes);
 document.getElementById("metamask").textContent=
 getal(som(data,"Metamask"));
 
-document.getElementById("wmtxStaking").textContent=
-getal(som(data,"Wmtx Staking"));
+/* LACE WALLET = J2 + J3 */
+document.getElementById("wmtxStaking").textContent=getal(wmtxTotaal);
+document.getElementById("wmtxGekochtTooltip").textContent=getal(wmtxGekocht);
+document.getElementById("wmtxStakingTooltip").textContent=getal(wmtxStaking);
 
 document.getElementById("unityNode").textContent=
 dollar(som(data,"Unity node"));
