@@ -4,93 +4,466 @@
 <meta charset="UTF-8">
 <title>STAR TREK // CRYPTO COMMAND</title>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;padding:24px;background:#050a12;color:#e8edf5;font-family:Arial,sans-serif;letter-spacing:.3px;position:relative;overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.015) 0,rgba(255,255,255,.015) 1px,transparent 1px,transparent 4px);z-index:0}
-body:after{content:"";position:fixed;left:calc(50% - 15px);top:15px;transform:translateX(-50%);width:748px;height:464px;background:url("https://hips.hearstapps.com/pop.h-cdn.co/assets/16/26/4000x2666/gallery-1467144815-starshipenterprise.jpg") center/contain no-repeat;opacity:.20;pointer-events:none;z-index:0}
-.header,.top-summary,.toggle-container,.filters,#cryptoView,#airnodeView,#minerView{position:relative;z-index:1}
-.header{background:linear-gradient(90deg,#e8a72c,#f4c45d 35%,#a85ce0 75%,#64358e);color:#10131a;padding:18px 25px;border-radius:4px 28px 4px 28px;margin-bottom:48px;box-shadow:0 0 22px rgba(232,167,44,.28);font-weight:bold;min-height:60px;position:relative;display:flex;align-items:center;justify-content:space-between}
-.header h2{margin:0;font-size:23px;letter-spacing:2px;position:relative;z-index:2}
-.header:after{content:"ONLINE // COMMAND SYSTEM";position:absolute;right:105px;top:23px;font-size:10px;letter-spacing:2px}
-.kirk{height:52px;width:52px;object-fit:cover;position:absolute;right:28px;top:4px;z-index:3;border-radius:50%;border:2px solid rgba(255,255,255,.7);box-shadow:0 0 9px rgba(255,255,255,.4);opacity:.9}
-.top-summary{display:flex;justify-content:space-between;gap:35px;margin-bottom:28px;align-items:flex-start;flex-wrap:wrap}
-.investment-area{display:flex;flex-direction:column;align-items:center;width:560px;min-width:560px}
-.total-investment{width:480px;height:135px;position:relative;z-index:2}
-.total-investment:after{content:"";position:absolute;width:3px;height:22px;background:#e8a72c;left:50%;bottom:-22px;transform:translateX(-50%)}
-.investment-children{position:relative;display:flex;justify-content:space-between;width:560px;padding-top:35px}
-.investment-children:before{content:"";position:absolute;height:3px;background:#e8a72c;top:35px;left:80px;right:80px}
-.investment-child{width:150px;height:120px;position:relative;display:flex;flex-direction:column;justify-content:center}
-.investment-child:before{content:"";position:absolute;width:3px;height:35px;background:#e8a72c;left:50%;top:0;transform:translateX(-50%)}
-.summary-right{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end;flex:1;min-width:420px}
-.summary-tile{background:linear-gradient(145deg,#151d2a,#0b111b);border:1px solid #e8a72c;border-left:6px solid #e8a72c;border-radius:3px 20px 3px 20px;padding:14px 22px;text-align:center;box-shadow:0 0 14px rgba(232,167,44,.12)}
-.total-investment .summary-tile{width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;background:linear-gradient(145deg,#211b0d,#0c1018);border:2px solid #f0b83e}
+
+body{
+margin:0;
+padding:24px;
+background:#050a12;
+color:#e8edf5;
+font-family:Arial,sans-serif;
+letter-spacing:.3px;
+position:relative;
+overflow-x:hidden
+}
+
+body:before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+background:repeating-linear-gradient(
+0deg,
+rgba(255,255,255,.015) 0,
+rgba(255,255,255,.015) 1px,
+transparent 1px,
+transparent 4px
+);
+z-index:0
+}
+
+body:after{
+content:"";
+position:fixed;
+left:calc(50% - 15px);
+top:15px;
+transform:translateX(-50%);
+width:748px;
+height:464px;
+background:url("https://hips.hearstapps.com/pop.h-cdn.co/assets/16/26/4000x2666/gallery-1467144815-starshipenterprise.jpg") center/contain no-repeat;
+opacity:.20;
+pointer-events:none;
+z-index:0
+}
+
+.header,.top-summary,.toggle-container,.filters,#cryptoView,#airnodeView,#minerView{
+position:relative;
+z-index:1
+}
+
+.header{
+background:linear-gradient(90deg,#e8a72c,#f4c45d 35%,#a85ce0 75%,#64358e);
+color:#10131a;
+padding:18px 25px;
+border-radius:4px 28px 4px 28px;
+margin-bottom:48px;
+box-shadow:0 0 22px rgba(232,167,44,.28);
+font-weight:bold;
+min-height:60px;
+position:relative;
+display:flex;
+align-items:center;
+justify-content:space-between
+}
+
+.header h2{
+margin:0;
+font-size:23px;
+letter-spacing:2px;
+position:relative;
+z-index:2
+}
+
+.header-status{
+position:absolute;
+right:105px;
+top:13px;
+text-align:center;
+line-height:1.2
+}
+
+.header-online{
+font-size:10px;
+letter-spacing:2px;
+font-weight:bold;
+white-space:nowrap
+}
+
+.header-update{
+font-size:8px;
+letter-spacing:1px;
+font-weight:bold;
+margin-top:5px;
+white-space:nowrap;
+opacity:.75
+}
+
+.kirk{
+height:52px;
+width:52px;
+object-fit:cover;
+position:absolute;
+right:28px;
+top:4px;
+z-index:3;
+border-radius:50%;
+border:2px solid rgba(255,255,255,.7);
+box-shadow:0 0 9px rgba(255,255,255,.4);
+opacity:.9
+}
+
+.top-summary{
+display:flex;
+justify-content:space-between;
+gap:35px;
+margin-bottom:28px;
+align-items:flex-start;
+flex-wrap:wrap
+}
+
+.investment-area{
+display:flex;
+flex-direction:column;
+align-items:center;
+width:560px;
+min-width:560px
+}
+
+.total-investment{
+width:480px;
+height:135px;
+position:relative;
+z-index:2
+}
+
+.total-investment:after{
+content:"";
+position:absolute;
+width:3px;
+height:22px;
+background:#e8a72c;
+left:50%;
+bottom:-22px;
+transform:translateX(-50%)
+}
+
+.investment-children{
+position:relative;
+display:flex;
+justify-content:space-between;
+width:560px;
+padding-top:35px
+}
+
+.investment-children:before{
+content:"";
+position:absolute;
+height:3px;
+background:#e8a72c;
+top:35px;
+left:80px;
+right:80px
+}
+
+.investment-child{
+width:150px;
+height:120px;
+position:relative;
+display:flex;
+flex-direction:column;
+justify-content:center
+}
+
+.investment-child:before{
+content:"";
+position:absolute;
+width:3px;
+height:35px;
+background:#e8a72c;
+left:50%;
+top:0;
+transform:translateX(-50%)
+}
+
+.summary-right{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+justify-content:flex-end;
+flex:1;
+min-width:420px
+}
+
+.summary-tile{
+background:linear-gradient(145deg,#151d2a,#0b111b);
+border:1px solid #e8a72c;
+border-left:6px solid #e8a72c;
+border-radius:3px 20px 3px 20px;
+padding:14px 22px;
+text-align:center;
+box-shadow:0 0 14px rgba(232,167,44,.12)
+}
+
+.total-investment .summary-tile{
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:linear-gradient(145deg,#211b0d,#0c1018);
+border:2px solid #f0b83e
+}
+
 .investment-child.summary-tile{padding:12px 10px}
-.summary-title{font-size:.78em;color:#f2bd45;font-weight:bold;letter-spacing:1.5px}
-.summary-subtitle{font-size:.62em;color:#aeb7c7;margin-top:3px;text-transform:uppercase}
-.summary-value{font-size:1.45em;font-weight:bold;margin-top:5px;color:#f5f7fb}
+
+.summary-title{
+font-size:.78em;
+color:#f2bd45;
+font-weight:bold;
+letter-spacing:1.5px
+}
+
+.summary-subtitle{
+font-size:.62em;
+color:#aeb7c7;
+margin-top:3px;
+text-transform:uppercase
+}
+
+.summary-value{
+font-size:1.45em;
+font-weight:bold;
+margin-top:5px;
+color:#f5f7fb
+}
+
 .total-investment .summary-title{font-size:1em}
-.total-investment .summary-value{font-size:2.2em;color:#ffd15c;text-shadow:0 0 14px rgba(255,190,50,.45)}
+
+.total-investment .summary-value{
+font-size:2.2em;
+color:#ffd15c;
+text-shadow:0 0 14px rgba(255,190,50,.45)
+}
+
 .investment-child .summary-title{font-size:.72em}
-.investment-child .summary-value{font-size:1.25em;margin-top:6px}
-.toggle-container{display:flex;justify-content:center;margin-bottom:20px}
-.toggle{display:flex;background:#0c131e;border:1px solid #536176;padding:4px;border-radius:4px 18px 4px 18px}
-.toggle button{border:0;background:transparent;color:#9da8b8;padding:10px 35px;border-radius:3px 13px 3px 13px;font-weight:bold;cursor:pointer;font-size:14px;letter-spacing:1px}
-.toggle button.active{background:#e8a72c;color:#111722;box-shadow:0 0 12px rgba(232,167,44,.35)}
-.filters{display:flex;gap:15px;margin-bottom:20px}
+
+.investment-child .summary-value{
+font-size:1.25em;
+margin-top:6px
+}
+
+.toggle-container{
+display:flex;
+justify-content:center;
+margin-bottom:20px
+}
+
+.toggle{
+display:flex;
+background:#0c131e;
+border:1px solid #536176;
+padding:4px;
+border-radius:4px 18px 4px 18px
+}
+
+.toggle button{
+border:0;
+background:transparent;
+color:#9da8b8;
+padding:10px 35px;
+border-radius:3px 13px 3px 13px;
+font-weight:bold;
+cursor:pointer;
+font-size:14px;
+letter-spacing:1px
+}
+
+.toggle button.active{
+background:#e8a72c;
+color:#111722;
+box-shadow:0 0 12px rgba(232,167,44,.35)
+}
+
+.filters{
+display:flex;
+gap:15px;
+margin-bottom:20px
+}
+
 .filter{flex:1}
-label{display:block;font-weight:bold;margin-bottom:5px;color:#d7dde8;font-size:12px;letter-spacing:1px}
-select{width:100%;padding:10px;border:1px solid #475569;border-radius:3px 12px 3px 12px;background:#0c131e;color:#f0f3f8}
-.kpis{display:flex;gap:12px;margin-bottom:20px}
-.kpi{flex:1;background:linear-gradient(145deg,#131c29,#080e17);border:1px solid #39485c;border-top:3px solid #a85ce0;border-radius:3px 16px 3px 16px;padding:15px;text-align:center}
-.kpi-title{font-size:.72em;color:#9ba7b8;font-weight:bold;letter-spacing:1.5px}
-.kpi-value{font-size:1.6em;font-weight:bold;margin-top:6px;color:#f1f4f8}
+
+label{
+display:block;
+font-weight:bold;
+margin-bottom:5px;
+color:#d7dde8;
+font-size:12px;
+letter-spacing:1px
+}
+
+select{
+width:100%;
+padding:10px;
+border:1px solid #475569;
+border-radius:3px 12px 3px 12px;
+background:#0c131e;
+color:#f0f3f8
+}
+
+.kpis{
+display:flex;
+gap:12px;
+margin-bottom:20px
+}
+
+.kpi{
+flex:1;
+background:linear-gradient(145deg,#131c29,#080e17);
+border:1px solid #39485c;
+border-top:3px solid #a85ce0;
+border-radius:3px 16px 3px 16px;
+padding:15px;
+text-align:center
+}
+
+.kpi-title{
+font-size:.72em;
+color:#9ba7b8;
+font-weight:bold;
+letter-spacing:1.5px
+}
+
+.kpi-value{
+font-size:1.6em;
+font-weight:bold;
+margin-top:6px;
+color:#f1f4f8
+}
+
 .kpi-positief,.rendement-positief{color:#54e38e!important}
 .kpi-negatief,.rendement-negatief{color:#ff647c!important}
-.onderkant{display:grid;grid-template-columns:1fr 1fr;gap:25px;align-items:start;margin-bottom:30px}
-.tabel-container,.grafiek-container{background:linear-gradient(145deg,#111a27,#080d15);border:1px solid #39485c;border-radius:4px 20px 4px 20px;padding:15px;box-shadow:0 5px 20px rgba(0,0,0,.3)}
+
+.onderkant{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:25px;
+align-items:start;
+margin-bottom:30px
+}
+
+.tabel-container,.grafiek-container{
+background:linear-gradient(145deg,#111a27,#080d15);
+border:1px solid #39485c;
+border-radius:4px 20px 4px 20px;
+padding:15px;
+box-shadow:0 5px 20px rgba(0,0,0,.3)
+}
+
 .grafiek-container{padding:8px}
-.tabel-container h3{color:#f0b83e;font-size:14px;letter-spacing:2px;margin-top:2px}
-.chart{width:100%;height:450px}
-table{width:100%;border-collapse:collapse}
-th,td{padding:9px;border-bottom:1px solid #263345;text-align:left;white-space:nowrap}
-th{background:#182333;color:#f0b83e;font-size:11px;letter-spacing:1px}
-td{color:#d8dee8;font-size:13px}
+
+.tabel-container h3{
+color:#f0b83e;
+font-size:14px;
+letter-spacing:2px;
+margin-top:2px
+}
+
+.chart{
+width:100%;
+height:450px
+}
+
+table{
+width:100%;
+border-collapse:collapse
+}
+
+th,td{
+padding:9px;
+border-bottom:1px solid #263345;
+text-align:left;
+white-space:nowrap
+}
+
+th{
+background:#182333;
+color:#f0b83e;
+font-size:11px;
+letter-spacing:1px
+}
+
+td{
+color:#d8dee8;
+font-size:13px
+}
+
 tbody tr:hover{background:#182333}
 tbody tr:last-child td{border-bottom:none}
 .airnode-only{display:none}
-@media(max-width:1100px){.top-summary{justify-content:center}.investment-area{width:100%;min-width:0}.summary-right{justify-content:center;min-width:0;width:100%}}
-@media(max-width:900px){.filters,.kpis{flex-direction:column}.onderkant{grid-template-columns:1fr}.toggle button{padding:10px 20px}.investment-area{width:100%}.total-investment{width:min(480px,100%)}.investment-children{width:100%;max-width:560px}.investment-child{width:30%;height:110px}.investment-children:before{left:15%;right:15%}}
+
+@media(max-width:1100px){
+.top-summary{justify-content:center}
+.investment-area{width:100%;min-width:0}
+.summary-right{justify-content:center;min-width:0;width:100%}
+}
+
+@media(max-width:900px){
+.filters,.kpis{flex-direction:column}
+.onderkant{grid-template-columns:1fr}
+.toggle button{padding:10px 20px}
+.investment-area{width:100%}
+.total-investment{width:min(480px,100%)}
+.investment-children{width:100%;max-width:560px}
+.investment-child{width:30%;height:110px}
+.investment-children:before{left:15%;right:15%}
+}
 </style>
 </head>
+
 <body>
 
 <div class="header">
 <h2>STAR TREK // CRYPTO COMMAND</h2>
+
+<div class="header-status">
+<div class="header-online">ONLINE // COMMAND SYSTEM</div>
+<div class="header-update">Latest update 30-08-2026 10:54</div>
+</div>
+
 <img class="kirk" src="https://media.giphy.com/media/kBfR2wWHiwNxwQPaQL/giphy.gif">
 </div>
 
 <div class="top-summary">
+
 <div class="investment-area">
+
 <div class="total-investment">
 <div class="summary-tile">
 <div class="summary-title">TOTALE INVESTERING</div>
 <div class="summary-value" id="totaleInvestering">€ 0</div>
 </div>
 </div>
+
 <div class="investment-children">
+
 <div class="investment-child summary-tile">
 <div class="summary-title">CRYPTO INLEG</div>
 <div class="summary-value" id="totaleInleg">€ 0</div>
 </div>
+
 <div class="investment-child summary-tile">
 <div class="summary-title">MINER INLEG</div>
 <div class="summary-value" id="minerInleg">€ 0</div>
 </div>
+
 <div class="investment-child summary-tile">
 <div class="summary-title">AIRNODES INLEG</div>
 <div class="summary-value" id="airnodeInleg">€ 0</div>
 </div>
+
 </div>
 </div>
 
@@ -100,6 +473,7 @@ tbody tr:last-child td{border-bottom:none}
 <div class="summary-tile"><div class="summary-title">UNITY NODE</div><div class="summary-subtitle">rendement</div><div class="summary-value" id="unityNode">$0</div></div>
 <div class="summary-tile"><div class="summary-title">AIRNODES</div><div class="summary-subtitle">rendement</div><div class="summary-value" id="kolomL">$0</div></div>
 </div>
+
 </div>
 
 <div class="toggle-container">
@@ -111,11 +485,19 @@ tbody tr:last-child td{border-bottom:none}
 </div>
 
 <div id="cryptoFilters" class="filters">
-<div class="filter"><label>CRYPTO</label><select id="crypto"><option>Allen</option></select></div>
-<div class="filter"><label>PERSOON</label><select id="persoon"><option>Allen</option></select></div>
+<div class="filter">
+<label>CRYPTO</label>
+<select id="crypto"><option>Allen</option></select>
+</div>
+
+<div class="filter">
+<label>PERSOON</label>
+<select id="persoon"><option>Allen</option></select>
+</div>
 </div>
 
 <div id="cryptoView">
+
 <div class="kpis">
 <div class="kpi"><div class="kpi-title">INLEG</div><div class="kpi-value" id="inleg">€ 0,00</div></div>
 <div class="kpi"><div class="kpi-title">DCA</div><div class="kpi-value" id="dca">€ 0,00</div></div>
@@ -125,14 +507,31 @@ tbody tr:last-child td{border-bottom:none}
 </div>
 
 <div class="onderkant">
+
 <div class="tabel-container">
 <h3>◈ DETAIL OVERVIEW</h3>
 <table>
-<thead><tr><th>WIE</th><th>CRYPTO</th><th>INLEG</th><th>TOKENS</th><th>DCA</th><th>KOERS</th><th>HUIDIGE WAARDE</th><th>RENDEMENT</th><th>%R</th></tr></thead>
+<thead>
+<tr>
+<th>WIE</th>
+<th>CRYPTO</th>
+<th>INLEG</th>
+<th>TOKENS</th>
+<th>DCA</th>
+<th>KOERS</th>
+<th>HUIDIGE WAARDE</th>
+<th>RENDEMENT</th>
+<th>%R</th>
+</tr>
+</thead>
 <tbody id="tabel"></tbody>
 </table>
 </div>
-<div class="grafiek-container"><div id="barAlleCrypto" class="chart"></div></div>
+
+<div class="grafiek-container">
+<div id="barAlleCrypto" class="chart"></div>
+</div>
+
 </div>
 </div>
 
@@ -140,7 +539,14 @@ tbody tr:last-child td{border-bottom:none}
 <div class="tabel-container">
 <h3>◈ AIRNODE OVERVIEW</h3>
 <table>
-<thead><tr><th>WIE</th><th>CRYPTO</th><th>INLEG</th><th>AANTAL</th></tr></thead>
+<thead>
+<tr>
+<th>WIE</th>
+<th>CRYPTO</th>
+<th>INLEG</th>
+<th>AANTAL</th>
+</tr>
+</thead>
 <tbody id="airnodeTabel"></tbody>
 </table>
 </div>
@@ -150,89 +556,329 @@ tbody tr:last-child td{border-bottom:none}
 <div class="tabel-container">
 <h3>◈ MINER OVERVIEW</h3>
 <table>
-<thead><tr><th>WIE</th><th>CRYPTO</th><th>INLEG</th><th>AANTAL</th></tr></thead>
+<thead>
+<tr>
+<th>WIE</th>
+<th>CRYPTO</th>
+<th>INLEG</th>
+<th>AANTAL</th>
+</tr>
+</thead>
 <tbody id="minerTabel"></tbody>
 </table>
 </div>
 </div>
 
 <script>
-const data=[{"Wie": "Dani", "Crypto": "Miner", "Inleg": 2250.0, "Tokens": NaN, "Type": "", "Aantal": 1.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -2250.0, "RendementPct": NaN, "Metamask": 245736.0, "Wmtx Staking": 190594.0, "Unity node": 138.0, "IsAirnode": true, "IsMiner": true, "IsCrypto": false, "Airnodes R": 325.0}, {"Wie": "Bianca", "Crypto": "Miner", "Inleg": 2250.0, "Tokens": NaN, "Type": "", "Aantal": 1.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -2250.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": true, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "Airnodes", "Inleg": 550.0, "Tokens": NaN, "Type": "Frontier Core", "Aantal": 1.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -550.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "Airnodes", "Inleg": 1124.0, "Tokens": NaN, "Type": "Embernodes", "Aantal": 10.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -1124.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "Airnodes", "Inleg": 562.0, "Tokens": NaN, "Type": "Embernodes", "Aantal": 5.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -562.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "Airnodes", "Inleg": 488.0, "Tokens": NaN, "Type": "Sparks", "Aantal": 5.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -488.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "Airnodes", "Inleg": 488.0, "Tokens": NaN, "Type": "Sparks", "Aantal": 5.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -488.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Thorgal", "Crypto": "ADA", "Inleg": 2000.0, "Tokens": 1380.0, "Type": "", "Aantal": NaN, "Koers": 0.173, "Huidige waarde": 238.61, "Rendement": -1761.3899999999999, "RendementPct": -88.06949999999999, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Thorgal", "Crypto": "COTI", "Inleg": 1750.0, "Tokens": 2031.0, "Type": "", "Aantal": NaN, "Koers": 0.0113, "Huidige waarde": 22.88, "Rendement": -1727.12, "RendementPct": -98.69257142857141, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Thorgal", "Crypto": "WMTX", "Inleg": 1350.0, "Tokens": 4916.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 144.51, "Rendement": -1205.49, "RendementPct": -89.29555555555557, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Loki", "Crypto": "ADA", "Inleg": 2000.0, "Tokens": 1380.0, "Type": "", "Aantal": NaN, "Koers": 0.173, "Huidige waarde": 238.61, "Rendement": -1761.3899999999999, "RendementPct": -88.06949999999999, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Loki", "Crypto": "COTI", "Inleg": 1750.0, "Tokens": 2031.0, "Type": "", "Aantal": NaN, "Koers": 0.0113, "Huidige waarde": 22.88, "Rendement": -1727.12, "RendementPct": -98.69257142857141, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Loki", "Crypto": "WMTX", "Inleg": 1250.0, "Tokens": 7593.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 223.21, "Rendement": -1026.79, "RendementPct": -82.1432, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Opa/Oma", "Crypto": "WMTX", "Inleg": 1000.0, "Tokens": 3186.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 93.66, "Rendement": -906.34, "RendementPct": -90.634, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "WMTX", "Inleg": 29292.0, "Tokens": 170536.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 5013.22, "Rendement": -24278.78, "RendementPct": -82.8853611907688, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "ADA", "Inleg": 21662.0, "Tokens": 16528.0, "Type": "", "Aantal": NaN, "Koers": 0.173, "Huidige waarde": 2857.73, "Rendement": -18804.27, "RendementPct": -86.80763549072108, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "COTI", "Inleg": 0.0, "Tokens": 54081.0, "Type": "", "Aantal": NaN, "Koers": 0.0113, "Huidige waarde": 609.27, "Rendement": 609.27, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "COTI", "Inleg": 27431.0, "Tokens": 459353.0, "Type": "", "Aantal": NaN, "Koers": 0.0113, "Huidige waarde": 5175.05, "Rendement": -22255.95, "RendementPct": -81.13430060880027, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "XRP", "Inleg": 5625.0, "Tokens": 7920.0, "Type": "", "Aantal": NaN, "Koers": 1.2, "Huidige waarde": 9501.7, "Rendement": 3876.7000000000007, "RendementPct": 68.91911111111112, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "BTC", "Inleg": 1863.0, "Tokens": 0.08234, "Type": "", "Aantal": NaN, "Koers": 67071.5, "Huidige waarde": 5522.67, "Rendement": 3659.67, "RendementPct": 196.43961352657004, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "BTC", "Inleg": 1863.0, "Tokens": 0.08234, "Type": "", "Aantal": NaN, "Koers": 67071.5, "Huidige waarde": 5522.67, "Rendement": 3659.67, "RendementPct": 196.43961352657004, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "LINK", "Inleg": 375.0, "Tokens": 60.4, "Type": "", "Aantal": NaN, "Koers": 9.79, "Huidige waarde": 591.17, "Rendement": 216.16999999999996, "RendementPct": 57.645333333333326, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "LINK", "Inleg": 1700.0, "Tokens": 75.6, "Type": "", "Aantal": NaN, "Koers": 9.79, "Huidige waarde": 739.94, "Rendement": -960.06, "RendementPct": -56.47411764705882, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "SOL", "Inleg": 800.0, "Tokens": 4.33, "Type": "", "Aantal": NaN, "Koers": 89.62, "Huidige waarde": 388.04, "Rendement": -411.96, "RendementPct": -51.495000000000005, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "DOT", "Inleg": 500.0, "Tokens": 22.09, "Type": "", "Aantal": NaN, "Koers": 0.724, "Huidige waarde": 16.0, "Rendement": -484.0, "RendementPct": -96.8, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "DENT", "Inleg": 400.0, "Tokens": 120411.0, "Type": "", "Aantal": NaN, "Koers": 6.614e-05, "Huidige waarde": 7.96, "Rendement": -392.04, "RendementPct": -98.01, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "MATIC", "Inleg": 400.0, "Tokens": 246.59, "Type": "", "Aantal": NaN, "Koers": 0.845, "Huidige waarde": 208.39, "Rendement": -191.61, "RendementPct": -47.9025, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "ENJ", "Inleg": 375.0, "Tokens": 242.7, "Type": "", "Aantal": NaN, "Koers": 0.022, "Huidige waarde": 5.25, "Rendement": -369.75, "RendementPct": -98.6, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "MANA", "Inleg": 375.0, "Tokens": 131.52, "Type": "", "Aantal": NaN, "Koers": 0.0632816, "Huidige waarde": 8.3228, "Rendement": -366.67719999999997, "RendementPct": -97.78058666666666, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "ALGO", "Inleg": 100.0, "Tokens": 843.0, "Type": "", "Aantal": NaN, "Koers": 0.075, "Huidige waarde": 62.84, "Rendement": -37.16, "RendementPct": -37.16, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "OCEAN", "Inleg": 131.0, "Tokens": 312.5, "Type": "", "Aantal": NaN, "Koers": 0.122, "Huidige waarde": 37.97, "Rendement": -93.03, "RendementPct": -71.01526717557252, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "ETH", "Inleg": 125.0, "Tokens": 0.0684, "Type": "", "Aantal": NaN, "Koers": 2102.4, "Huidige waarde": 143.8, "Rendement": 18.80000000000001, "RendementPct": 15.04000000000001, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "SAND", "Inleg": 50.0, "Tokens": 69.4, "Type": "", "Aantal": NaN, "Koers": 0.033, "Huidige waarde": 2.32, "Rendement": -47.68, "RendementPct": -95.36, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "APE", "Inleg": 50.0, "Tokens": 14.11, "Type": "", "Aantal": NaN, "Koers": 0.123, "Huidige waarde": 1.73, "Rendement": -48.27, "RendementPct": -96.54, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "WMTX", "Inleg": 0.0, "Tokens": 23347.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 686.33, "Rendement": 686.33, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "VET", "Inleg": 175.0, "Tokens": 1389.0, "Type": "", "Aantal": NaN, "Koers": 0.006, "Huidige waarde": 8.09, "Rendement": -166.91, "RendementPct": -95.37714285714286, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "BCH", "Inleg": 100.0, "Tokens": 0.23, "Type": "", "Aantal": NaN, "Koers": 211.598, "Huidige waarde": 48.67, "Rendement": -51.33, "RendementPct": -51.33, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}],top10Crypto=["WMTX", "COTI", "ADA", "XRP", "BTC", "LINK", "SOL", "DOT", "DENT", "MATIC"],top10Inleg=[32892.0, 30931.0, 25662.0, 5625.0, 3726.0, 2075.0, 800.0, 500.0, 400.0, 400.0],kolomLNaam="Airnodes R";
-const euro=x=>new Intl.NumberFormat("nl-NL",{style:"currency",currency:"EUR",minimumFractionDigits:0,maximumFractionDigits:0}).format(Number(x)||0);
-const getal=x=>new Intl.NumberFormat("nl-NL",{minimumFractionDigits:0,maximumFractionDigits:8}).format(Number(x)||0);
-const dollar=x=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",minimumFractionDigits:0,maximumFractionDigits:0}).format(Number(x)||0);
-const tokens=x=>x==null||x===""?"":Number(x).toLocaleString("nl-NL",{minimumFractionDigits:0,maximumFractionDigits:8});
-const koers=x=>{x=Number(x);if(!Number.isFinite(x))return "";let d=x>10?0:x>=1?1:2;return new Intl.NumberFormat("nl-NL",{minimumFractionDigits:d,maximumFractionDigits:d}).format(x)};
-const dcaRegel=(i,t)=>{i=Number(i)||0;t=Number(t)||0;return t>0?new Intl.NumberFormat("nl-NL",{style:"currency",currency:"EUR",minimumFractionDigits:2,maximumFractionDigits:2}).format(i/t):""};
-const rendementPercentage=(i,h)=>{i=Number(i)||0;h=Number(h)||0;return i===0?null:(h-i)/i*100};
-const isCrypto=x=>{const c=String(x.Crypto||"").trim().toLowerCase();return c!=="airnodes"&&c!=="miner"};
+
+const data=[{"Wie": "Dani", "Crypto": "Miner", "Inleg": 2250.0, "Tokens": NaN, "Type": "", "Aantal": 1.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -2250.0, "RendementPct": NaN, "Metamask": 245736.0, "Wmtx Staking": 190594.0, "Unity node": 138.0, "IsAirnode": true, "IsMiner": true, "IsCrypto": false, "Airnodes R": 325.0}, {"Wie": "Bianca", "Crypto": "Miner", "Inleg": 2250.0, "Tokens": NaN, "Type": "", "Aantal": 1.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -2250.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": true, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "Airnodes", "Inleg": 550.0, "Tokens": NaN, "Type": "Frontier Core", "Aantal": 1.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -550.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "Airnodes", "Inleg": 1124.0, "Tokens": NaN, "Type": "Embernodes", "Aantal": 10.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -1124.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "Airnodes", "Inleg": 562.0, "Tokens": NaN, "Type": "Embernodes", "Aantal": 5.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -562.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "Airnodes", "Inleg": 488.0, "Tokens": NaN, "Type": "Sparks", "Aantal": 5.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -488.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "Airnodes", "Inleg": 488.0, "Tokens": NaN, "Type": "Sparks", "Aantal": 5.0, "Koers": NaN, "Huidige waarde": NaN, "Rendement": -488.0, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": true, "IsMiner": false, "IsCrypto": false, "Airnodes R": NaN}, {"Wie": "Thorgal", "Crypto": "ADA", "Inleg": 2000.0, "Tokens": 1380.0, "Type": "", "Aantal": NaN, "Koers": 0.173, "Huidige waarde": 239.19, "Rendement": -1760.81, "RendementPct": -88.0405, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Thorgal", "Crypto": "COTI", "Inleg": 1750.0, "Tokens": 2031.0, "Type": "", "Aantal": NaN, "Koers": 0.0114, "Huidige waarde": 23.11, "Rendement": -1726.89, "RendementPct": -98.67942857142857, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Thorgal", "Crypto": "WMTX", "Inleg": 1350.0, "Tokens": 4916.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 144.26, "Rendement": -1205.74, "RendementPct": -89.31407407407409, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Loki", "Crypto": "ADA", "Inleg": 2000.0, "Tokens": 1380.0, "Type": "", "Aantal": NaN, "Koers": 0.173, "Huidige waarde": 239.19, "Rendement": -1760.81, "RendementPct": -88.0405, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Loki", "Crypto": "COTI", "Inleg": 1750.0, "Tokens": 2031.0, "Type": "", "Aantal": NaN, "Koers": 0.0114, "Huidige waarde": 23.11, "Rendement": -1726.89, "RendementPct": -98.67942857142857, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Loki", "Crypto": "WMTX", "Inleg": 1250.0, "Tokens": 7593.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 222.81, "Rendement": -1027.19, "RendementPct": -82.1752, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Opa/Oma", "Crypto": "WMTX", "Inleg": 1000.0, "Tokens": 3186.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 93.49, "Rendement": -906.51, "RendementPct": -90.65100000000001, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "WMTX", "Inleg": 29292.0, "Tokens": 170536.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 5004.21, "Rendement": -24287.79, "RendementPct": -82.91612044244162, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "ADA", "Inleg": 21662.0, "Tokens": 16528.0, "Type": "", "Aantal": NaN, "Koers": 0.173, "Huidige waarde": 2864.7, "Rendement": -18797.3, "RendementPct": -86.77545932970177, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "COTI", "Inleg": 0.0, "Tokens": 54081.0, "Type": "", "Aantal": NaN, "Koers": 0.0114, "Huidige waarde": 615.35, "Rendement": 615.35, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "COTI", "Inleg": 27431.0, "Tokens": 459353.0, "Type": "", "Aantal": NaN, "Koers": 0.0114, "Huidige waarde": 5226.63, "Rendement": -22204.37, "RendementPct": -80.94626517443768, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "XRP", "Inleg": 5625.0, "Tokens": 7920.0, "Type": "", "Aantal": NaN, "Koers": 1.2, "Huidige waarde": 9501.7, "Rendement": 3876.7000000000007, "RendementPct": 68.91911111111112, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "BTC", "Inleg": 1863.0, "Tokens": 0.08234, "Type": "", "Aantal": NaN, "Koers": 67434.87, "Huidige waarde": 5552.59, "Rendement": 3689.59, "RendementPct": 198.04562533548042, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "BTC", "Inleg": 1863.0, "Tokens": 0.08234, "Type": "", "Aantal": NaN, "Koers": 67434.87, "Huidige waarde": 5552.59, "Rendement": 3689.59, "RendementPct": 198.04562533548042, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "LINK", "Inleg": 375.0, "Tokens": 60.4, "Type": "", "Aantal": NaN, "Koers": 9.84, "Huidige waarde": 594.3, "Rendement": 219.29999999999995, "RendementPct": 58.47999999999999, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "LINK", "Inleg": 1700.0, "Tokens": 75.6, "Type": "", "Aantal": NaN, "Koers": 9.84, "Huidige waarde": 743.85, "Rendement": -956.15, "RendementPct": -56.24411764705882, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "SOL", "Inleg": 800.0, "Tokens": 4.33, "Type": "", "Aantal": NaN, "Koers": 90.57, "Huidige waarde": 392.15, "Rendement": -407.85, "RendementPct": -50.98125, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "DOT", "Inleg": 500.0, "Tokens": 22.09, "Type": "", "Aantal": NaN, "Koers": 0.728, "Huidige waarde": 16.09, "Rendement": -483.91, "RendementPct": -96.782, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "DENT", "Inleg": 400.0, "Tokens": 120411.0, "Type": "", "Aantal": NaN, "Koers": 6.68e-05, "Huidige waarde": 8.04, "Rendement": -391.96, "RendementPct": -97.99, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "MATIC", "Inleg": 400.0, "Tokens": 246.59, "Type": "", "Aantal": NaN, "Koers": 0.845, "Huidige waarde": 208.46, "Rendement": -191.54, "RendementPct": -47.885, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "ENJ", "Inleg": 375.0, "Tokens": 242.7, "Type": "", "Aantal": NaN, "Koers": 0.022, "Huidige waarde": 5.26, "Rendement": -369.74, "RendementPct": -98.59733333333334, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "MANA", "Inleg": 375.0, "Tokens": 131.52, "Type": "", "Aantal": NaN, "Koers": 0.0655533, "Huidige waarde": 8.6216, "Rendement": -366.3784, "RendementPct": -97.70090666666667, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "ALGO", "Inleg": 100.0, "Tokens": 843.0, "Type": "", "Aantal": NaN, "Koers": 0.075, "Huidige waarde": 63.28, "Rendement": -36.72, "RendementPct": -36.72, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "OCEAN", "Inleg": 131.0, "Tokens": 312.5, "Type": "", "Aantal": NaN, "Koers": 0.123, "Huidige waarde": 38.45, "Rendement": -92.55, "RendementPct": -70.64885496183206, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "ETH", "Inleg": 125.0, "Tokens": 0.0684, "Type": "", "Aantal": NaN, "Koers": 2120.7, "Huidige waarde": 145.06, "Rendement": 20.060000000000002, "RendementPct": 16.048000000000002, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "SAND", "Inleg": 50.0, "Tokens": 69.4, "Type": "", "Aantal": NaN, "Koers": 0.033, "Huidige waarde": 2.31, "Rendement": -47.69, "RendementPct": -95.38, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "APE", "Inleg": 50.0, "Tokens": 14.11, "Type": "", "Aantal": NaN, "Koers": 0.12, "Huidige waarde": 1.69, "Rendement": -48.31, "RendementPct": -96.62, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Dani", "Crypto": "WMTX", "Inleg": 0.0, "Tokens": 23347.0, "Type": "", "Aantal": NaN, "Koers": 0.029, "Huidige waarde": 685.09, "Rendement": 685.09, "RendementPct": NaN, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "VET", "Inleg": 175.0, "Tokens": 1389.0, "Type": "", "Aantal": NaN, "Koers": 0.006, "Huidige waarde": 8.47, "Rendement": -166.53, "RendementPct": -95.16, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}, {"Wie": "Bianca", "Crypto": "BCH", "Inleg": 100.0, "Tokens": 0.23, "Type": "", "Aantal": NaN, "Koers": 211.434, "Huidige waarde": 48.63, "Rendement": -51.37, "RendementPct": -51.36999999999999, "Metamask": NaN, "Wmtx Staking": NaN, "Unity node": NaN, "IsAirnode": false, "IsMiner": false, "IsCrypto": true, "Airnodes R": NaN}],
+top10Crypto=["WMTX", "COTI", "ADA", "XRP", "BTC", "LINK", "SOL", "DOT", "DENT", "MATIC"],
+top10Inleg=[32892.0, 30931.0, 25662.0, 5625.0, 3726.0, 2075.0, 800.0, 500.0, 400.0, 400.0],
+kolomLNaam="Airnodes R";
+
+const euro=x=>new Intl.NumberFormat(
+"nl-NL",
+{style:"currency",currency:"EUR",minimumFractionDigits:0,maximumFractionDigits:0}
+).format(Number(x)||0);
+
+const getal=x=>new Intl.NumberFormat(
+"nl-NL",
+{minimumFractionDigits:0,maximumFractionDigits:8}
+).format(Number(x)||0);
+
+const dollar=x=>new Intl.NumberFormat(
+"en-US",
+{style:"currency",currency:"USD",minimumFractionDigits:0,maximumFractionDigits:0}
+).format(Number(x)||0);
+
+const tokens=x=>
+x==null||x===""?"":
+Number(x).toLocaleString(
+"nl-NL",
+{minimumFractionDigits:0,maximumFractionDigits:8}
+);
+
+const koers=x=>{
+x=Number(x);
+if(!Number.isFinite(x))return "";
+let d=x>10?0:x>=1?1:2;
+return new Intl.NumberFormat(
+"nl-NL",
+{minimumFractionDigits:d,maximumFractionDigits:d}
+).format(x)
+};
+
+const dcaRegel=(i,t)=>{
+i=Number(i)||0;
+t=Number(t)||0;
+
+return t>0
+?new Intl.NumberFormat(
+"nl-NL",
+{
+style:"currency",
+currency:"EUR",
+minimumFractionDigits:2,
+maximumFractionDigits:2
+}
+).format(i/t)
+:""
+};
+
+const rendementPercentage=(i,h)=>{
+i=Number(i)||0;
+h=Number(h)||0;
+return i===0?null:(h-i)/i*100
+};
+
+const isCrypto=x=>{
+const c=String(x.Crypto||"").trim().toLowerCase();
+return c!=="airnodes"&&c!=="miner"
+};
 
 ["Crypto","Wie"].forEach((k,i)=>{
 const e=document.getElementById(["crypto","persoon"][i]);
-[...new Set(data.filter(isCrypto).map(x=>x[k]).filter(Boolean))].sort().forEach(x=>e.add(new Option(x,x)))
+
+[...new Set(
+data.filter(isCrypto)
+.map(x=>x[k])
+.filter(Boolean)
+)]
+.sort()
+.forEach(x=>e.add(new Option(x,x)))
 });
 
 function maakCryptoGrafiek(){
+
 const max=Math.max(...top10Inleg,1);
-Plotly.react("barAlleCrypto",[{
-x:top10Inleg,y:top10Crypto,type:"bar",orientation:"h",
-text:top10Inleg.map(euro),texttemplate:"%{text}",textposition:"outside",cliponaxis:false,
+
+Plotly.react(
+"barAlleCrypto",
+[{
+x:top10Inleg,
+y:top10Crypto,
+type:"bar",
+orientation:"h",
+text:top10Inleg.map(euro),
+texttemplate:"%{text}",
+textposition:"outside",
+cliponaxis:false,
 marker:{line:{width:1}},
 hovertemplate:"<b>%{y}</b><br>Inleg: %{text}<extra></extra>"
-}],{
-title:{text:"TOP 10 CRYPTO // INLEG",font:{size:17,color:"#f0b83e"}},
-margin:{l:85,r:100,t:60,b:35},height:450,
-xaxis:{showgrid:true,gridcolor:"#263345",showticklabels:false,zeroline:false,range:[0,max*1.2]},
-yaxis:{autorange:"reversed",tickfont:{size:13,color:"#d8dee8"}},
-plot_bgcolor:"#080d15",paper_bgcolor:"#080d15",font:{family:"Arial",color:"#d8dee8"}
-},{responsive:true,displayModeBar:false})
+}],
+{
+title:{
+text:"TOP 10 CRYPTO // INLEG",
+font:{size:17,color:"#f0b83e"}
+},
+margin:{l:85,r:100,t:60,b:35},
+height:450,
+xaxis:{
+showgrid:true,
+gridcolor:"#263345",
+showticklabels:false,
+zeroline:false,
+range:[0,max*1.2]
+},
+yaxis:{
+autorange:"reversed",
+tickfont:{size:13,color:"#d8dee8"}
+},
+plot_bgcolor:"#080d15",
+paper_bgcolor:"#080d15",
+font:{
+family:"Arial",
+color:"#d8dee8"
+}
+},
+{
+responsive:true,
+displayModeBar:false
+}
+)
 }
 
 function vulCryptoTabel(bron){
-const gesorteerd=[...bron].sort((a,b)=>Number(b.RendementPct)-Number(a.RendementPct));
-document.getElementById("tabel").innerHTML=gesorteerd.map(x=>{
-const i=Number(x.Inleg)||0,h=Number(x["Huidige waarde"])||0,r=h-i,p=rendementPercentage(i,h),c=r>0?"rendement-positief":r<0?"rendement-negatief":"";
-return `<tr><td>${x.Wie??""}</td><td>${x.Crypto??""}</td><td>${euro(i)}</td><td>${tokens(x.Tokens)}</td><td>${dcaRegel(x.Inleg,x.Tokens)}</td><td>${koers(x.Koers)}</td><td>${x["Huidige waarde"]!=null?euro(h):""}</td><td class="${c}">${x["Huidige waarde"]!=null?euro(r):""}</td><td class="${c}">${p!==null?p.toLocaleString("nl-NL",{minimumFractionDigits:2,maximumFractionDigits:2})+" %":""}</td></tr>`
+
+const gesorteerd=[
+...bron
+].sort(
+(a,b)=>Number(b.RendementPct)-Number(a.RendementPct)
+);
+
+document.getElementById("tabel").innerHTML=
+gesorteerd.map(x=>{
+
+const i=Number(x.Inleg)||0;
+const h=Number(x["Huidige waarde"])||0;
+const r=h-i;
+const p=rendementPercentage(i,h);
+
+const c=
+r>0
+?"rendement-positief"
+:r<0
+?"rendement-negatief"
+:"";
+
+return `
+<tr>
+<td>${x.Wie??""}</td>
+<td>${x.Crypto??""}</td>
+<td>${euro(i)}</td>
+<td>${tokens(x.Tokens)}</td>
+<td>${dcaRegel(x.Inleg,x.Tokens)}</td>
+<td>${koers(x.Koers)}</td>
+<td>${x["Huidige waarde"]!=null?euro(h):""}</td>
+<td class="${c}">${x["Huidige waarde"]!=null?euro(r):""}</td>
+<td class="${c}">
+${p!==null?p.toLocaleString(
+"nl-NL",
+{minimumFractionDigits:2,maximumFractionDigits:2}
+)+" %":""}
+</td>
+</tr>
+`
 }).join("")
 }
 
 function vulAirnodeTabel(){
-document.getElementById("airnodeTabel").innerHTML=data.filter(x=>x.IsAirnode&&!x.IsMiner).map(x=>`<tr><td>${x.Wie??""}</td><td>${x.Crypto??""}</td><td>${x.Inleg!=null?euro(x.Inleg):""}</td><td>${x.Aantal??""}</td></tr>`).join("")
+
+document.getElementById("airnodeTabel").innerHTML=
+data
+.filter(x=>x.IsAirnode&&!x.IsMiner)
+.map(x=>`
+<tr>
+<td>${x.Wie??""}</td>
+<td>${x.Crypto??""}</td>
+<td>${x.Inleg!=null?euro(x.Inleg):""}</td>
+<td>${x.Aantal??""}</td>
+</tr>
+`)
+.join("")
 }
 
 function vulMinerTabel(){
-document.getElementById("minerTabel").innerHTML=data.filter(x=>x.IsMiner).map(x=>`<tr><td>${x.Wie??""}</td><td>${x.Crypto??""}</td><td>${x.Inleg!=null?euro(x.Inleg):""}</td><td>${x.Aantal??""}</td></tr>`).join("")
+
+document.getElementById("minerTabel").innerHTML=
+data
+.filter(x=>x.IsMiner)
+.map(x=>`
+<tr>
+<td>${x.Wie??""}</td>
+<td>${x.Crypto??""}</td>
+<td>${x.Inleg!=null?euro(x.Inleg):""}</td>
+<td>${x.Aantal??""}</td>
+</tr>
+`)
+.join("")
 }
 
 function update(){
-const cf=document.getElementById("crypto").value,pf=document.getElementById("persoon").value;
-const d=data.filter(isCrypto).filter(x=>(cf==="Allen"||x.Crypto===cf)&&(pf==="Allen"||x.Wie===pf));
-const som=(a,k)=>a.reduce((s,x)=>s+(Number(x[k])||0),0);
-const totaalCryptoInleg=som(data.filter(x=>x.IsCrypto),"Inleg");
-const totaalMiner=som(data.filter(x=>x.IsMiner),"Inleg");
-const totaalAirnodes=som(data.filter(x=>String(x.Crypto||"").trim().toLowerCase()==="airnodes"),"Inleg");
-const totaleInvestering=totaalCryptoInleg+totaalMiner+totaalAirnodes;
-const totaalInlegCrypto=som(d,"Inleg"),totaalTokens=som(d,"Tokens"),totaalHuidigeWaarde=som(d,"Huidige waarde");
-const totaalRendement=totaalHuidigeWaarde-totaalInlegCrypto,dca=totaalTokens>0?totaalInlegCrypto/totaalTokens:0;
+
+const cf=document.getElementById("crypto").value;
+const pf=document.getElementById("persoon").value;
+
+const d=data
+.filter(isCrypto)
+.filter(
+x=>
+(cf==="Allen"||x.Crypto===cf)
+&&
+(pf==="Allen"||x.Wie===pf)
+);
+
+const som=(a,k)=>a.reduce(
+(s,x)=>s+(Number(x[k])||0),
+0
+);
+
+const totaalCryptoInleg=som(
+data.filter(x=>x.IsCrypto),
+"Inleg"
+);
+
+const totaalMiner=som(
+data.filter(x=>x.IsMiner),
+"Inleg"
+);
+
+const totaalAirnodes=som(
+data.filter(
+x=>String(x.Crypto||"").trim().toLowerCase()==="airnodes"
+),
+"Inleg"
+);
+
+const totaleInvestering=
+totaalCryptoInleg+
+totaalMiner+
+totaalAirnodes;
+
+const totaalInlegCrypto=som(d,"Inleg");
+const totaalTokens=som(d,"Tokens");
+const totaalHuidigeWaarde=som(d,"Huidige waarde");
+
+const totaalRendement=
+totaalHuidigeWaarde-
+totaalInlegCrypto;
+
+const dca=
+totaalTokens>0
+?totaalInlegCrypto/totaalTokens
+:0;
 
 document.getElementById("totaleInvestering").textContent=euro(totaleInvestering);
 document.getElementById("totaleInleg").textContent=euro(totaalCryptoInleg);
 document.getElementById("minerInleg").textContent=euro(totaalMiner);
 document.getElementById("airnodeInleg").textContent=euro(totaalAirnodes);
-document.getElementById("metamask").textContent=getal(som(data,"Metamask"));
-document.getElementById("wmtxStaking").textContent=getal(som(data,"Wmtx Staking"));
-document.getElementById("unityNode").textContent=dollar(som(data,"Unity node"));
-document.getElementById("kolomL").textContent=dollar(som(data,kolomLNaam));
-document.getElementById("inleg").textContent=euro(totaalInlegCrypto);
-document.getElementById("dca").textContent=dca.toLocaleString("nl-NL",{style:"currency",currency:"EUR",minimumFractionDigits:2,maximumFractionDigits:2});
-document.getElementById("volume").textContent=tokens(totaalTokens);
-document.getElementById("huidigeWaarde").textContent=euro(totaalHuidigeWaarde);
+
+document.getElementById("metamask").textContent=
+getal(som(data,"Metamask"));
+
+document.getElementById("wmtxStaking").textContent=
+getal(som(data,"Wmtx Staking"));
+
+document.getElementById("unityNode").textContent=
+dollar(som(data,"Unity node"));
+
+document.getElementById("kolomL").textContent=
+dollar(som(data,kolomLNaam));
+
+document.getElementById("inleg").textContent=
+euro(totaalInlegCrypto);
+
+document.getElementById("dca").textContent=
+dca.toLocaleString(
+"nl-NL",
+{
+style:"currency",
+currency:"EUR",
+minimumFractionDigits:2,
+maximumFractionDigits:2
+}
+);
+
+document.getElementById("volume").textContent=
+tokens(totaalTokens);
+
+document.getElementById("huidigeWaarde").textContent=
+euro(totaalHuidigeWaarde);
 
 const rt=document.getElementById("rendement");
+
 rt.textContent=euro(totaalRendement);
-rt.classList.remove("kpi-positief","kpi-negatief");
-if(totaalRendement>0)rt.classList.add("kpi-positief");
-else if(totaalRendement<0)rt.classList.add("kpi-negatief");
+
+rt.classList.remove(
+"kpi-positief",
+"kpi-negatief"
+);
+
+if(totaalRendement>0)
+rt.classList.add("kpi-positief");
+
+else if(totaalRendement<0)
+rt.classList.add("kpi-negatief");
 
 vulCryptoTabel(d);
 vulAirnodeTabel();
@@ -241,19 +887,48 @@ maakCryptoGrafiek()
 }
 
 function zetWeergave(w){
-const c=w==="crypto",a=w==="airnodes";
-document.getElementById("cryptoView").style.display=c?"block":"none";
-document.getElementById("airnodeView").style.display=a?"block":"none";
-document.getElementById("minerView").style.display=w==="miners"?"block":"none";
-document.getElementById("cryptoFilters").style.display=c?"flex":"none";
-document.getElementById("toggleCrypto").classList.toggle("active",c);
-document.getElementById("toggleAirnodes").classList.toggle("active",a);
-document.getElementById("toggleMiners").classList.toggle("active",w==="miners")
+
+const c=w==="crypto";
+const a=w==="airnodes";
+
+document.getElementById("cryptoView").style.display=
+c?"block":"none";
+
+document.getElementById("airnodeView").style.display=
+a?"block":"none";
+
+document.getElementById("minerView").style.display=
+w==="miners"?"block":"none";
+
+document.getElementById("cryptoFilters").style.display=
+c?"flex":"none";
+
+document.getElementById("toggleCrypto").classList.toggle(
+"active",
+c
+);
+
+document.getElementById("toggleAirnodes").classList.toggle(
+"active",
+a
+);
+
+document.getElementById("toggleMiners").classList.toggle(
+"active",
+w==="miners"
+)
 }
 
-["crypto","persoon"].forEach(x=>document.getElementById(x).addEventListener("change",update));
+["crypto","persoon"].forEach(
+x=>
+document.getElementById(x)
+.addEventListener("change",update)
+);
+
 update();
 zetWeergave("crypto");
+
 </script>
+
 </body>
 </html>
