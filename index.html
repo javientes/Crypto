@@ -76,7 +76,7 @@ td{color:#d8dee8;font-size:13px}tbody tr:hover{background:#182333}tbody tr:last-
 <h2>STAR TREK // CRYPTO COMMAND</h2>
 <div class="header-status">
 <div class="header-online">ONLINE // COMMAND SYSTEM</div>
-<div class="header-update">Latest update 30-08-2026 18:47</div>
+<div class="header-update">Latest update 30-08-2026 18:52</div>
 </div>
 <img class="kirk" src="https://media.giphy.com/media/kBfR2wWHiwNxwQPaQL/giphy.gif">
 </div>
@@ -213,39 +213,50 @@ function simpeleTabel(id,filter){
 }
 
 function update(){
-    const cf=crypto.value,pf=persoon.value;
-    const d=data.filter(cryptoRow).filter(x=>(cf==="Allen"||x.Crypto===cf)&&(pf==="Allen"||x.Wie===pf));
+    const cf=document.getElementById("crypto").value;
+    const pf=document.getElementById("persoon").value;
+
+    const d=data.filter(cryptoRow).filter(x=>
+        (cf==="Allen"||x.Crypto===cf)&&
+        (pf==="Allen"||x.Wie===pf)
+    );
 
     const cryptoInleg=som(data.filter(cryptoRow),"Inleg");
-    const minerInleg=som(data.filter(minerRow),"Inleg");
-    const airnodeInleg=som(data.filter(airnodeRow),"Inleg");
-    const i=som(d,"Inleg"),t=som(d,"Tokens"),h=som(d,"Huidige waarde"),r=h-i;
+    const minerTotaal=som(data.filter(minerRow),"Inleg");
+    const airnodeTotaal=som(data.filter(airnodeRow),"Inleg");
 
-    totaleInvestering.textContent=euro(cryptoInleg+minerInleg+airnodeInleg);
-    totaleInleg.textContent=euro(cryptoInleg);
-    minerInleg!==undefined&&(document.getElementById("minerInleg").textContent=euro(minerInleg));
-    airnodeInleg!==undefined&&(document.getElementById("airnodeInleg").textContent=euro(airnodeInleg));
+    const i=som(d,"Inleg");
+    const t=som(d,"Tokens");
+    const h=som(d,"Huidige waarde");
+    const r=h-i;
 
-    metamask.textContent=getal(som(data,"Metamask"));
-    wmtxStaking.textContent=getal(wmtxTotaal);
-    wmtxGekochtTooltip.textContent=getal(wmtxGekocht);
-    wmtxStakingTooltip.textContent=getal(wmtxStaking);
-    unityNode.textContent=dollar(som(data,"Unity node"));
-    kolomL.textContent=dollar(som(data,kolomLNaam));
+    document.getElementById("totaleInvestering").textContent=euro(cryptoInleg+minerTotaal+airnodeTotaal);
+    document.getElementById("totaleInleg").textContent=euro(cryptoInleg);
+    document.getElementById("minerInleg").textContent=euro(minerTotaal);
+    document.getElementById("airnodeInleg").textContent=euro(airnodeTotaal);
 
-    inleg.textContent=euro(i);
-    dca.textContent=t?euro2(i/t):euro2(0);
-    volume.textContent=tokens(t);
-    huidigeWaarde.textContent=euro(h);
+    document.getElementById("metamask").textContent=getal(som(data,"Metamask"));
+    document.getElementById("wmtxStaking").textContent=getal(wmtxTotaal);
+    document.getElementById("wmtxGekochtTooltip").textContent=getal(wmtxGekocht);
+    document.getElementById("wmtxStakingTooltip").textContent=getal(wmtxStaking);
+    document.getElementById("unityNode").textContent=dollar(som(data,"Unity node"));
+    document.getElementById("kolomL").textContent=dollar(som(data,kolomLNaam));
+
+    document.getElementById("inleg").textContent=euro(i);
+    document.getElementById("dca").textContent=t?euro2(i/t):euro2(0);
+    document.getElementById("volume").textContent=tokens(t);
+    document.getElementById("huidigeWaarde").textContent=euro(h);
 
     const re=document.getElementById("rendement");
-    re.textContent=euro(r);re.classList.remove("kpi-positief","kpi-negatief");
-    if(r>0)re.classList.add("kpi-positief");else if(r<0)re.classList.add("kpi-negatief");
+    re.textContent=euro(r);
+    re.classList.remove("kpi-positief","kpi-negatief");
+    if(r>0)re.classList.add("kpi-positief");
+    else if(r<0)re.classList.add("kpi-negatief");
 
     cryptoTabel(d);
     simpeleTabel("airnodeTabel",airnodeRow);
     simpeleTabel("minerTabel",minerRow);
-    grafiek()
+    grafiek();
 }
 
 function weergave(w){
