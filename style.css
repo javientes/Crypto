@@ -1,0 +1,580 @@
+*{box-sizing:border-box}
+
+body{
+margin:0;
+padding:24px;
+background:#050a12;
+color:#e8edf5;
+font-family:Arial,sans-serif;
+letter-spacing:.3px;
+position:relative;
+overflow-x:hidden
+}
+
+body:before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+background:repeating-linear-gradient(
+0deg,
+rgba(255,255,255,.015) 0,
+rgba(255,255,255,.015) 1px,
+transparent 1px,
+transparent 4px
+);
+z-index:0
+}
+
+body:after{
+content:"";
+position:fixed;
+left:calc(50% - 15px);
+top:15px;
+transform:translateX(-50%);
+width:748px;
+height:464px;
+background:url("https://hips.hearstapps.com/pop.h-cdn.co/assets/16/26/4000x2666/gallery-1467144815-starshipenterprise.jpg") center/contain no-repeat;
+opacity:.20;
+pointer-events:none;
+z-index:0
+}
+
+.header,
+.top-summary,
+.toggle-container,
+.filters,
+#cryptoView,
+#airnodeView,
+#minerView{
+position:relative;
+z-index:1
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+background:linear-gradient(90deg,#e8a72c,#f4c45d 35%,#a85ce0 75%,#64358e);
+color:#10131a;
+padding:18px 25px;
+border-radius:4px 28px 4px 28px;
+margin-bottom:48px;
+box-shadow:0 0 22px rgba(232,167,44,.28);
+font-weight:bold;
+min-height:60px;
+display:flex;
+align-items:center;
+justify-content:space-between
+}
+
+.header h2{
+margin:0;
+font-size:23px;
+letter-spacing:2px;
+position:relative;
+z-index:2
+}
+
+.header-status{
+position:absolute;
+right:105px;
+top:13px;
+text-align:center;
+line-height:1.2
+}
+
+.header-online{
+font-size:12px;
+letter-spacing:2px;
+font-weight:bold;
+white-space:nowrap
+}
+
+.header-update{
+font-size:10px;
+letter-spacing:1px;
+font-weight:bold;
+margin-top:5px;
+white-space:nowrap;
+opacity:.75
+}
+
+.kirk{
+height:52px;
+width:52px;
+object-fit:cover;
+position:absolute;
+right:28px;
+top:4px;
+z-index:3;
+border-radius:50%;
+border:2px solid rgba(255,255,255,.7);
+box-shadow:0 0 9px rgba(255,255,255,.4);
+opacity:.9
+}
+
+
+/* =========================
+   BOVENSTE TILES
+========================= */
+
+.top-summary{
+display:flex;
+justify-content:space-between;
+gap:35px;
+margin-bottom:28px;
+align-items:flex-start;
+flex-wrap:wrap
+}
+
+.investment-area{
+display:flex;
+flex-direction:column;
+align-items:center;
+width:560px;
+min-width:560px
+}
+
+.total-investment{
+width:480px;
+height:135px;
+position:relative;
+z-index:2
+}
+
+.total-investment:after{
+content:"";
+position:absolute;
+width:3px;
+height:35px;
+background:#e8a72c;
+left:50%;
+bottom:-35px;
+transform:translateX(-50%);
+z-index:3
+}
+
+.investment-children{
+position:relative;
+display:flex;
+justify-content:space-between;
+width:560px;
+padding-top:35px;
+transform:translateX(-3px)
+}
+
+.investment-children:before{
+content:"";
+position:absolute;
+height:3px;
+background:#e8a72c;
+top:33px;
+left:78px;
+right:72px;
+z-index:1
+}
+
+.investment-child{
+width:150px;
+height:120px;
+position:relative;
+display:flex;
+flex-direction:column;
+justify-content:center
+}
+
+.investment-child:before{
+content:"";
+position:absolute;
+width:3px;
+height:35px;
+background:#e8a72c;
+left:50%;
+top:-2px;
+transform:translateX(-50%);
+z-index:2
+}
+
+.summary-right{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+justify-content:flex-end;
+flex:1;
+min-width:420px
+}
+
+.summary-tile{
+background:linear-gradient(145deg,#4a525e,#252c35);
+border:1px solid #e8a72c;
+border-left:6px solid #e8a72c;
+border-radius:3px 20px 3px 20px;
+padding:14px 22px;
+text-align:center;
+box-shadow:0 0 14px rgba(232,167,44,.12)
+}
+
+.total-investment .summary-tile{
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:linear-gradient(145deg,#4a525e,#252c35);
+border:2px solid #f0b83e
+}
+
+.investment-child.summary-tile{
+padding:12px 10px
+}
+
+.summary-title{
+font-size:.78em;
+color:#f2bd45;
+font-weight:bold;
+letter-spacing:1.5px
+}
+
+.summary-subtitle{
+font-size:.62em;
+color:#aeb7c7;
+margin-top:3px;
+text-transform:uppercase
+}
+
+.summary-value{
+font-size:1.45em;
+font-weight:bold;
+margin-top:5px;
+color:#f5f7fb
+}
+
+.total-investment .summary-title{
+font-size:1em
+}
+
+.total-investment .summary-value{
+font-size:2.2em;
+color:#ffd15c;
+text-shadow:0 0 14px rgba(255,190,50,.45)
+}
+
+.investment-child .summary-title{
+font-size:.72em
+}
+
+.investment-child .summary-value{
+font-size:1.25em;
+margin-top:6px
+}
+
+
+/* =========================
+   LACE WALLET TOOLTIP
+========================= */
+
+.tooltip-tile{
+position:relative;
+cursor:default
+}
+
+.tile-tooltip{
+position:absolute;
+left:50%;
+bottom:calc(100% + 10px);
+transform:translateX(-50%) translateY(5px);
+background:#0c131e;
+border:1px solid #e8a72c;
+border-radius:4px 12px 4px 12px;
+padding:10px 13px;
+min-width:190px;
+opacity:0;
+visibility:hidden;
+transition:.15s ease;
+pointer-events:none;
+z-index:50;
+box-shadow:0 5px 18px rgba(0,0,0,.45);
+text-align:left
+}
+
+.tooltip-tile:hover .tile-tooltip{
+opacity:1;
+visibility:visible;
+transform:translateX(-50%) translateY(0)
+}
+
+.tooltip-row{
+display:flex;
+justify-content:space-between;
+gap:18px;
+font-size:11px;
+line-height:1.8;
+white-space:nowrap
+}
+
+.tooltip-label{
+color:#b8c1cf
+}
+
+.tooltip-value{
+color:#f4c45d;
+font-weight:bold
+}
+
+
+/* =========================
+   TOGGLE
+========================= */
+
+.toggle-container{
+display:flex;
+justify-content:center;
+margin-bottom:20px
+}
+
+.toggle{
+display:flex;
+background:#0c131e;
+border:1px solid #536176;
+padding:4px;
+border-radius:4px 18px 4px 18px
+}
+
+.toggle button{
+border:0;
+background:transparent;
+color:#9da8b8;
+padding:10px 35px;
+border-radius:3px 13px 3px 13px;
+font-weight:bold;
+cursor:pointer;
+font-size:14px;
+letter-spacing:1px
+}
+
+.toggle button.active{
+background:#e8a72c;
+color:#111722;
+box-shadow:0 0 12px rgba(232,167,44,.35)
+}
+
+
+/* =========================
+   FILTERS
+========================= */
+
+.filters{
+display:flex;
+gap:15px;
+margin-bottom:20px
+}
+
+.filter{
+flex:1
+}
+
+label{
+display:block;
+font-weight:bold;
+margin-bottom:5px;
+color:#d7dde8;
+font-size:12px;
+letter-spacing:1px
+}
+
+select{
+width:100%;
+padding:10px;
+border:1px solid #475569;
+border-radius:3px 12px 3px 12px;
+background:#0c131e;
+color:#f0f3f8
+}
+
+
+/* =========================
+   KPI
+========================= */
+
+.kpis{
+display:flex;
+gap:12px;
+margin-bottom:20px
+}
+
+.kpi{
+flex:1;
+background:linear-gradient(145deg,#131c29,#080e17);
+border:1px solid #39485c;
+border-top:3px solid #a85ce0;
+border-radius:3px 16px 3px 16px;
+padding:15px;
+text-align:center
+}
+
+.kpi-title{
+font-size:.72em;
+color:#9ba7b8;
+font-weight:bold;
+letter-spacing:1.5px
+}
+
+.kpi-value{
+font-size:1.6em;
+font-weight:bold;
+margin-top:6px;
+color:#f1f4f8
+}
+
+.kpi-positief,
+.rendement-positief{
+color:#54e38e!important
+}
+
+.kpi-negatief,
+.rendement-negatief{
+color:#ff647c!important
+}
+
+
+/* =========================
+   TABEL + GRAFIEK
+========================= */
+
+.onderkant{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:25px;
+align-items:start;
+margin-bottom:30px
+}
+
+.tabel-container,
+.grafiek-container{
+background:linear-gradient(145deg,#111a27,#080d15);
+border:1px solid #39485c;
+border-radius:4px 20px 4px 20px;
+padding:15px;
+box-shadow:0 5px 20px rgba(0,0,0,.3)
+}
+
+.grafiek-container{
+padding:8px
+}
+
+.tabel-container h3{
+color:#f0b83e;
+font-size:14px;
+letter-spacing:2px;
+margin-top:2px
+}
+
+.chart{
+width:100%;
+height:450px
+}
+
+table{
+width:100%;
+border-collapse:collapse
+}
+
+th,
+td{
+padding:9px;
+border-bottom:1px solid #263345;
+text-align:left;
+white-space:nowrap
+}
+
+th{
+background:#182333;
+color:#f0b83e;
+font-size:11px;
+letter-spacing:1px
+}
+
+td{
+color:#d8dee8;
+font-size:13px
+}
+
+tbody tr:hover{
+background:#182333
+}
+
+tbody tr:last-child td{
+border-bottom:none
+}
+
+.alternatieve-view{
+display:none
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1100px){
+
+.top-summary{
+justify-content:center
+}
+
+.investment-area{
+width:100%;
+min-width:0
+}
+
+.summary-right{
+justify-content:center;
+min-width:0;
+width:100%
+}
+
+}
+
+@media(max-width:900px){
+
+.filters,
+.kpis{
+flex-direction:column
+}
+
+.onderkant{
+grid-template-columns:1fr
+}
+
+.toggle button{
+padding:10px 20px
+}
+
+.investment-area{
+width:100%
+}
+
+.total-investment{
+width:min(480px,100%)
+}
+
+.investment-children{
+width:100%;
+max-width:560px
+}
+
+.investment-child{
+width:30%;
+height:110px
+}
+
+.investment-children:before{
+left:15%;
+right:15%
+}
+
+}
