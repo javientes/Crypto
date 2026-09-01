@@ -179,7 +179,7 @@ function cryptoTabel(bron){
    AIRNODE / MINER TABELLEN
 ========================= */
 
-function simpeleTabel(id,filter){
+function simpeleTabel(id,filter,toonType=false){
 
     el(id).innerHTML=data
         .filter(filter)
@@ -187,6 +187,7 @@ function simpeleTabel(id,filter){
             <tr>
                 <td>${x.Wie||""}</td>
                 <td>${x.Crypto||""}</td>
+                ${toonType?`<td>${x.Type||""}</td>`:""}
                 <td>${x.Inleg!=null?euro(x.Inleg):""}</td>
                 <td>${x.Aantal??""}</td>
             </tr>
@@ -421,7 +422,7 @@ filtersVullen();
 el("cryptoFilter").addEventListener("change",update);
 el("persoonFilter").addEventListener("change",update);
 
-simpeleTabel("airnodeTabel",airnodeRow);
+simpeleTabel("airnodeTabel",airnodeRow,true);
 simpeleTabel("minerTabel",minerRow);
 
 grafiek();
