@@ -94,12 +94,13 @@ white-space:nowrap
 }
 
 .header-update{
-font-size:10px;
-letter-spacing:1px;
+font-size:14px;
+color:#10131a;
+letter-spacing:.4px;
 font-weight:bold;
 margin-top:5px;
 white-space:nowrap;
-opacity:.75
+opacity:1
 }
 
 .kirk{
